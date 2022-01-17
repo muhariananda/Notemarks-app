@@ -7,10 +7,13 @@
         <entry key="app/src/main/res/drawable/bg_search_view.xml" value="0.215625" />
         <entry key="app/src/main/res/drawable/selector_icon_bottom_color.xml" value="0.215625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_note_add.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_note_add.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_note_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_to_do_list.xml" value="0.17572463768115942" />
+        <entry key="app/src/main/res/layout/item_row_note.xml" value="0.25" />
         <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.19947916666666668" />
+        <entry key="app/src/main/res/menu/menu_note_add.xml" value="0.19947916666666668" />
+        <entry key="app/src/main/res/menu/menu_top_note_update.xml" value="0.19947916666666668" />
       </map>
     </option>
   </component>

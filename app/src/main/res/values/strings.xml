@@ -5,4 +5,7 @@
     <string name="menu_notes_title">Notes</string>
     <string name="menu_to_do_title">Todo</string>
     <string name="text_add_note">Add notes</string>
+    <string name="text_menu_save">Save</string>
+    <string name="text_menu_custom">Custom</string>
+    <string name="text_menu_delete">Delete</string>
 </resources>
