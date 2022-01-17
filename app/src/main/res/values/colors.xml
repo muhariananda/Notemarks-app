@@ -12,6 +12,10 @@
     <color name="hint">#a4b0be</color>
     <color name="text">#2f3542</color>
 
+    <color name="semantic_green">#2ed573</color>
+    <color name="semantic_yellow">#feca57</color>
+    <color name="semantic_red">#ff4757</color>
+
     <color name="lightGrey">#dfe4ea</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>

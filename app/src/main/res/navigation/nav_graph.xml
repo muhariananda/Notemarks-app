@@ -12,10 +12,18 @@
         tools:layout="@layout/fragment_note_list" >
         <action
             android:id="@+id/action_noteListFragment_to_noteAddFragment"
-            app:destination="@id/noteAddFragment" />
+            app:destination="@id/noteAddFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_noteListFragment_to_noteUpdateFragment"
-            app:destination="@id/noteUpdateFragment" />
+            app:destination="@id/noteUpdateFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
     <fragment
         android:id="@+id/noteAddFragment"
@@ -24,7 +32,12 @@
         tools:layout="@layout/fragment_note_add" >
         <action
             android:id="@+id/action_noteAddFragment_to_noteListFragment"
-            app:destination="@id/noteListFragment" />
+            app:destination="@id/noteListFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_noteAddFragment_to_noteBottomSheet"
+            app:destination="@id/noteBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/noteUpdateFragment"
@@ -33,11 +46,30 @@
         tools:layout="@layout/fragment_note_update" >
         <action
             android:id="@+id/action_noteUpdateFragment_to_noteListFragment"
-            app:destination="@id/noteListFragment" />
+            app:destination="@id/noteListFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_noteUpdateFragment_to_noteBottomSheet"
+            app:destination="@id/noteBottomSheet" />
+        <argument
+            android:name="currentNote"
+            app:argType="id.muhariananda.notemarks.data.note.models.Note" />
     </fragment>
     <fragment
         android:id="@+id/toDoListFragment"
         android:name="id.muhariananda.notemarks.ui.todo.list.ToDoListFragment"
         android:label="fragment_to_do_list"
         tools:layout="@layout/fragment_to_do_list" />
+    <dialog
+        android:id="@+id/noteBottomSheet"
+        android:name="id.muhariananda.notemarks.ui.note.NoteBottomSheet"
+        android:label="NoteBottomSheet" >
+        <action
+            android:id="@+id/action_noteBottomSheet_to_noteAddFragment"
+            app:destination="@id/noteAddFragment" />
+        <action
+            android:id="@+id/action_noteBottomSheet_to_noteUpdateFragment"
+            app:destination="@id/noteUpdateFragment" />
+    </dialog>
 </navigation>

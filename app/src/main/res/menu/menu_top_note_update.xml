@@ -9,12 +9,6 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/note_update_custom"
-        android:icon="@drawable/ic_custom"
-        android:title="@string/text_menu_custom"
-        app:showAsAction="always"/>
-
-    <item
         android:id="@+id/note_update_save"
         android:icon="@drawable/ic_save"
         android:title="@string/text_menu_save"

@@ -4,24 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.note.add.NoteAddFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_note_update"
+            android:id="@+id/toolbar_note_add"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/menu_top_note_add" />
+            android:background="@color/background"
+            app:menu="@menu/menu_top_note_add"
+            app:navigationIcon="@drawable/ic_arrow"
+            app:navigationIconTint="@color/primary" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup_note_add"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_low_add"
+            style="@style/ThemeOverlay.Notemarks.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/text_low_priority" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_medium_add"
+            style="@style/ThemeOverlay.Notemarks.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_medium_priority" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_high_add"
+            style="@style/ThemeOverlay.Notemarks.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_high_priority" />
+    </com.google.android.material.chip.ChipGroup>
 
     <EditText
         android:id="@+id/edt_note_update_title"
@@ -32,17 +72,17 @@
         android:layout_marginEnd="16dp"
         android:background="@null"
         android:ems="10"
-        android:hint="Title"
-        android:inputType="textPersonName"
+        android:hint="Title.."
+        android:inputType="text"
         android:minHeight="48dp"
         android:paddingHorizontal="8dp"
         android:textColor="@color/text"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/chipGroup_note_add" />
 
     <EditText
         android:id="@+id/edt_note_update_content"
@@ -52,7 +92,13 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
+        android:background="@null"
         android:ems="10"
+        android:paddingHorizontal="8dp"
+        android:hint="enter text.."
+        android:textSize="14sp"
+        android:lineSpacingMultiplier="1.5"
+        android:textColor="@color/text"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
