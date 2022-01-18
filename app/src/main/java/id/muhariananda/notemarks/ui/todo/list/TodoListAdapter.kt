@@ -4,18 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import id.muhariananda.notemarks.data.todo.models.ToDo
+import id.muhariananda.notemarks.data.todo.models.Todo
 import id.muhariananda.notemarks.databinding.ItemRowToDoBinding
 
-class ToDoListAdapter : RecyclerView.Adapter<ToDoListAdapter.ViewHolder>() {
+class TodoListAdapter : RecyclerView.Adapter<TodoListAdapter.ViewHolder>() {
 
-    private var todos = emptyList<ToDo>()
+    var todoList = emptyList<Todo>()
 
     class ViewHolder(private val binding: ItemRowToDoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(toDo: ToDo) {
-            binding.todo = toDo
+        fun bind(todo: Todo) {
+            binding.todo = todo
             binding.executePendingBindings()
         }
 
@@ -33,17 +33,17 @@ class ToDoListAdapter : RecyclerView.Adapter<ToDoListAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(todos[position])
+        holder.bind(todoList[position])
     }
 
     override fun getItemCount(): Int {
-        return todos.size
+        return todoList.size
     }
 
-    fun saveTodo(todoList: List<ToDo>) {
-        val todoDiffUtil = ToDoDiffUtil(todos, todoList)
+    fun saveTodo(todos: List<Todo>) {
+        val todoDiffUtil = TodoDiffUtil(todoList, todos)
         val todoDiffResult = DiffUtil.calculateDiff(todoDiffUtil)
-        this.todos = todoList
+        this.todoList = todos
         todoDiffResult.dispatchUpdatesTo(this)
     }
 }

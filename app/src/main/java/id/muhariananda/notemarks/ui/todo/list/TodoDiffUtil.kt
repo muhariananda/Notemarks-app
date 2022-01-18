@@ -1,11 +1,11 @@
 package id.muhariananda.notemarks.ui.todo.list
 
 import androidx.recyclerview.widget.DiffUtil
-import id.muhariananda.notemarks.data.todo.models.ToDo
+import id.muhariananda.notemarks.data.todo.models.Todo
 
-class ToDoDiffUtil(
-    private val oldList: List<ToDo>,
-    private val newList: List<ToDo>
+class TodoDiffUtil(
+    private val oldList: List<Todo>,
+    private val newList: List<Todo>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return oldList.size

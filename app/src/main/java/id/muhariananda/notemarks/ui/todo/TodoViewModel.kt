@@ -6,31 +6,31 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import id.muhariananda.notemarks.data.ToDoRepository
 import id.muhariananda.notemarks.data.db.AppNotesDatabase
-import id.muhariananda.notemarks.data.todo.models.ToDo
+import id.muhariananda.notemarks.data.todo.models.Todo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ToDoViewModel(application: Application) : AndroidViewModel(application) {
+class TodoViewModel(application: Application) : AndroidViewModel(application) {
     private val todoDao = AppNotesDatabase.getDatabase(application).toDoDao()
     private val repository = ToDoRepository(todoDao)
 
     val todos = repository.todosFlow.asLiveData()
 
-    fun insertTodo(toDo: ToDo) {
+    fun insertTodo(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertTodo(toDo)
+            repository.insertTodo(todo)
         }
     }
 
-    fun updateTodo(toDo: ToDo) {
+    fun updateTodo(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateTodo(toDo)
+            repository.updateTodo(todo)
         }
     }
 
-    fun deleteTodo(toDo: ToDo) {
+    fun deleteTodo(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteTodo(toDo)
+            repository.deleteTodo(todo)
         }
     }
 

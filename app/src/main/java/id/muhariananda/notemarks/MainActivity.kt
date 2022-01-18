@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 bottomNav.visibility = when (destination.id) {
                     R.id.noteListFragment -> View.VISIBLE
-                    R.id.toDoListFragment -> View.VISIBLE
+                    R.id.todoListFragment -> View.VISIBLE
                     else -> View.GONE
                 }
             }

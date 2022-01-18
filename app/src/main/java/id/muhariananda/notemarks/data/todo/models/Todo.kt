@@ -5,11 +5,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
-@Entity(tableName = "to_do_table")
+@Entity(tableName = "todo_table")
 @Parcelize
-data class ToDo(
+data class Todo(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val title: String,
-    val isDone: Boolean
+    val isDone: Boolean = false
 ) : Parcelable

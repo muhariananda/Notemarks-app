@@ -7,7 +7,7 @@
         android:title="@string/menu_notes_title"/>
 
     <item
-        android:id="@+id/toDoListFragment"
+        android:id="@+id/todoListFragment"
         android:icon="@drawable/ic_mark"
         android:title="@string/menu_to_do_title"/>
 

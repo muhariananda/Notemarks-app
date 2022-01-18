@@ -1,11 +1,15 @@
 package id.muhariananda.notemarks.ui.todo
 
+import android.view.View
 import android.widget.CheckBox
+import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import id.muhariananda.notemarks.R
-import id.muhariananda.notemarks.data.todo.models.ToDo
+import id.muhariananda.notemarks.data.todo.models.Todo
+import id.muhariananda.notemarks.ui.todo.list.TodoListFragmentDirections
 
 
 class TodoBindingAdapters {
@@ -17,15 +21,35 @@ class TodoBindingAdapters {
             this.setOnClickListener {
                 if (navigate) {
                     this.findNavController()
-                        .navigate(R.id.action_toDoListFragment_to_todoAddFragment)
+                        .navigate(R.id.action_todoListFragment_to_todoAddFragment)
                 }
+            }
+        }
+
+        @BindingAdapter("android:sendDataToTodoUpdateFragment")
+        @JvmStatic
+        fun CardView.sendDataToTodoUpdateFragment(currentTodo: Todo) {
+            this.setOnClickListener {
+                val action = TodoListFragmentDirections
+                    .actionTodoListFragmentToTodoUpdateFragment(currentTodo)
+                this.findNavController().navigate(action)
+            }
+        }
+
+        @BindingAdapter("android:checkTodosEmpty")
+        @JvmStatic
+        fun View.checkTodosEmpty(emptyTodos: MutableLiveData<Boolean>) {
+            when(emptyTodos.value) {
+                true -> this.visibility = View.VISIBLE
+                else -> this.visibility = View.INVISIBLE
             }
         }
 
         @BindingAdapter("android:parseCheck")
         @JvmStatic
-        fun CheckBox.parseCheck(toDo: ToDo) {
-            this.isChecked = toDo.isDone
+        fun CheckBox.parseCheck(todo: Todo) {
+            this.isChecked = todo.isDone
+            this.isEnabled = !todo.isDone
         }
     }
 }

@@ -1,29 +1,29 @@
 package id.muhariananda.notemarks.data
 
-import id.muhariananda.notemarks.data.todo.ToDoDao
-import id.muhariananda.notemarks.data.todo.models.ToDo
+import id.muhariananda.notemarks.data.todo.TodoDao
+import id.muhariananda.notemarks.data.todo.models.Todo
 import kotlinx.coroutines.flow.Flow
 
-class ToDoRepository(private val toDoDao: ToDoDao) {
+class ToDoRepository(private val todoDao: TodoDao) {
 
-    val todosFlow: Flow<List<ToDo>>
-        get() = toDoDao.getTodos()
+    val todosFlow: Flow<List<Todo>>
+        get() = todoDao.getTodos()
 
 
-    suspend fun insertTodo(toDo: ToDo) {
-        toDoDao.insertTodo(toDo)
+    suspend fun insertTodo(todo: Todo) {
+        todoDao.insertTodo(todo)
     }
 
-    suspend fun updateTodo(toDo: ToDo) {
-        toDoDao.updateTodo(toDo)
+    suspend fun updateTodo(todo: Todo) {
+        todoDao.updateTodo(todo)
     }
 
-    suspend fun deleteTodo(toDo: ToDo) {
-        toDoDao.deleteTodo(toDo)
+    suspend fun deleteTodo(todo: Todo) {
+        todoDao.deleteTodo(todo)
     }
 
     suspend fun deleteAllTodos() {
-        toDoDao.deleteAllTodos()
+        todoDao.deleteAllTodos()
     }
 
 }

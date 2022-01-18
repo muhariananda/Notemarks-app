@@ -80,9 +80,8 @@ class BindingAdapters {
         @JvmStatic
         fun CardView.senDataToNoteUpdateFragment(currentNote: Note) {
             this.setOnClickListener {
-                val action = NoteListFragmentDirections.actionNoteListFragmentToNoteUpdateFragment(
-                    currentNote
-                )
+                val action = NoteListFragmentDirections
+                    .actionNoteListFragmentToNoteUpdateFragment(currentNote)
                 this.findNavController().navigate(action)
             }
         }

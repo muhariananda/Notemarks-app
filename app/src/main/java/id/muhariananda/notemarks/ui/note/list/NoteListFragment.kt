@@ -119,13 +119,13 @@ class NoteListFragment : Fragment() {
                 addDuration = 300
             }
 
-            mNoteViewModel.getAllNotes.observe(viewLifecycleOwner, Observer { notes ->
-                mSharedViewModel?.checkNotesIfEmpty(notes)
-                adapter.saveNotes(notes)
-            })
-
             swipeToDelete(rvListNote)
         }
+
+        mNoteViewModel.getAllNotes.observe(viewLifecycleOwner, { notes ->
+            mNoteSharedViewModel.checkNotesIfEmpty(notes)
+            adapter.saveNotes(notes)
+        })
     }
 
     private fun swipeToDelete(recyclerView: RecyclerView) {
@@ -134,14 +134,14 @@ class NoteListFragment : Fragment() {
                 val itemToDelete = adapter.notesList[viewHolder.adapterPosition]
                 mNoteViewModel.deleteNote(itemToDelete)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                restoreDeleteNote(viewHolder.itemView, itemToDelete, viewHolder.adapterPosition)
+                restoreDeleteNote(viewHolder.itemView, itemToDelete)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
-    private fun restoreDeleteNote(view: View, deletedNote: Note, position: Int) {
+    private fun restoreDeleteNote(view: View, deletedNote: Note) {
         val snackBar = Snackbar.make(
             view,
             "Deleted ${deletedNote.title}",
