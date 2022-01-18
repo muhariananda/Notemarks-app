@@ -29,7 +29,6 @@ class TodoAddFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTodoAddBinding.inflate(inflater, container, false)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogStyle)
         return binding.root
     }
 
