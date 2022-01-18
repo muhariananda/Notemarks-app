@@ -10,10 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.chip.Chip
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.data.note.models.Note
+import id.muhariananda.notemarks.data.note.models.Priority
 import id.muhariananda.notemarks.databinding.FragmentNoteUpdateBinding
-import id.muhariananda.notemarks.ui.SharedViewModel
+import id.muhariananda.notemarks.ui.note.NoteSharedViewModel
 import id.muhariananda.notemarks.ui.note.NoteViewModel
 
 class NoteUpdateFragment : Fragment() {
@@ -24,7 +26,7 @@ class NoteUpdateFragment : Fragment() {
     private val args by navArgs<NoteUpdateFragmentArgs>()
 
     private val mNoteViewModel: NoteViewModel by viewModels()
-    private val mSharedViewModel: SharedViewModel by viewModels()
+    private val mNoteSharedViewModel: NoteSharedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +40,7 @@ class NoteUpdateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.note = args.currentNote
         setupMenuUpdate()
+        setupChip()
     }
 
     override fun onDestroy() {
@@ -68,19 +71,34 @@ class NoteUpdateFragment : Fragment() {
         }
     }
 
+    private fun setupChip() {
+        binding.apply {
+            when (args.currentNote.priority) {
+                Priority.LOW -> chipLowUpdate.isChecked = true
+                Priority.MEDIUM -> chipMediumUpdate.isChecked = true
+                Priority.HIGH -> chipHighUpdate.isChecked = true
+            }
+
+            chipGroupNoteUpdate.setOnCheckedChangeListener { group, checkedId ->
+                val titleOrNull = group.findViewById<Chip>(checkedId)?.text.toString()
+                mNoteSharedViewModel.parsePriority(titleOrNull)
+            }
+        }
+    }
+
     private fun updateNoteToDB() {
         binding.apply {
             val title = edtNoteUpdateTitle.text.toString()
             val content = edtNoteUpdateContent.text.toString()
 
-            val validation = mSharedViewModel.validationNoteForm(title, content)
+            val validation = mNoteSharedViewModel.validationNoteForm(title, content)
             if (validation) {
                 val noteUpdate = Note(
                     args.currentNote.id,
                     title,
                     content,
                     args.currentNote.date,
-                    args.currentNote.priority
+                    mNoteSharedViewModel.mPriority.value!!
                 )
                 mNoteViewModel.updateNote(noteUpdate)
                 Toast.makeText(requireContext(), "Update Successfully", Toast.LENGTH_LONG).show()

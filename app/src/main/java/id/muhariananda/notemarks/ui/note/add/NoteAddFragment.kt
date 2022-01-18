@@ -1,20 +1,20 @@
 package id.muhariananda.notemarks.ui.note.add
 
 import android.os.Bundle
-import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.children
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.data.note.models.Note
+import id.muhariananda.notemarks.data.note.models.Priority
 import id.muhariananda.notemarks.databinding.FragmentNoteAddBinding
-import id.muhariananda.notemarks.ui.SharedViewModel
+import id.muhariananda.notemarks.ui.note.NoteSharedViewModel
 import id.muhariananda.notemarks.ui.note.NoteViewModel
 
 class NoteAddFragment : Fragment() {
@@ -23,7 +23,7 @@ class NoteAddFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val noteViewModel: NoteViewModel by viewModels()
-    private val sharedViewModel: SharedViewModel by viewModels()
+    private val noteSharedViewModel: NoteSharedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +36,7 @@ class NoteAddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupMenu()
+        setupChip()
     }
 
     override fun onDestroy() {
@@ -62,22 +63,26 @@ class NoteAddFragment : Fragment() {
         }
     }
 
+    private fun setupChip() {
+        binding.chipGroupNoteAdd.setOnCheckedChangeListener { group, checkedId ->
+            val titleOrNull = group.findViewById<Chip>(checkedId)?.text.toString()
+            noteSharedViewModel.parsePriority(titleOrNull)
+        }
+    }
+
     private fun insertNoteToDB() {
         binding.apply {
-            val selectedChip = chipGroupNoteAdd.children.find { (it as Chip).isChecked } as Chip
-
             val mTitle = edtNoteUpdateTitle.text.toString()
             val mContent = edtNoteUpdateContent.text.toString()
-            val mPriority = selectedChip.text.toString()
 
-            val validation = sharedViewModel.validationNoteForm(mTitle, mContent)
+            val validation = noteSharedViewModel.validationNoteForm(mTitle, mContent)
             if (validation) {
                 val note = Note(
                     0,
                     mTitle,
                     mContent,
-                    sharedViewModel.getCurrentDate(),
-                    sharedViewModel.parsePriority(mPriority)
+                    noteSharedViewModel.getCurrentDate(),
+                    noteSharedViewModel.mPriority.value!!
                 )
                 noteViewModel.insertData(note)
                 findNavController().popBackStack()
@@ -87,5 +92,4 @@ class NoteAddFragment : Fragment() {
             }
         }
     }
-
 }

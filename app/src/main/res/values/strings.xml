@@ -9,8 +9,9 @@
     <string name="text_menu_custom">Custom</string>
     <string name="text_menu_delete">Delete</string>
     <string name="text_select_priority">Select Priority</string>
-    <string name="text_low_priority">Low Priority</string>
-    <string name="text_medium_priority">Medium Priority</string>
-    <string name="text_high_priority">High Priority</string>
+    <string name="text_low_priority">Low priority</string>
+    <string name="text_medium_priority">Medium priority</string>
+    <string name="text_high_priority">High priority</string>
     <string name="text_no_notes">No notes</string>
+    <string name="text_hint_note_title">Title..</string>
 </resources>

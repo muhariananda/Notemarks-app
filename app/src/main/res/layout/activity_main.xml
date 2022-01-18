@@ -37,6 +37,7 @@
         app:elevation="0dp"
         app:itemIconTint="@drawable/bottom_nav_ic_selector"
         app:labelVisibilityMode="unlabeled"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"

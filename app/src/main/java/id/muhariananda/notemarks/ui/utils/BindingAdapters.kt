@@ -6,9 +6,12 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.data.note.models.Note
 import id.muhariananda.notemarks.data.note.models.Priority
+import id.muhariananda.notemarks.ui.note.NoteSharedViewModel
 import id.muhariananda.notemarks.ui.note.list.NoteListFragmentDirections
 
 class BindingAdapters {
@@ -31,6 +34,15 @@ class BindingAdapters {
             when(emptyNotes.value) {
                 true -> this.visibility = View.VISIBLE
                 else -> this.visibility = View.INVISIBLE
+            }
+        }
+
+        @BindingAdapter("android:parsePriority")
+        @JvmStatic
+        fun ChipGroup.parsePriority(noteSharedViewModel: NoteSharedViewModel) {
+            this.setOnCheckedChangeListener { group, checkedId ->
+                val titleOrNull = group.findViewById<Chip>(checkedId)?.text.toString()
+                noteSharedViewModel.parsePriority(titleOrNull)
             }
         }
 

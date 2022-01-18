@@ -1,4 +1,4 @@
-package id.muhariananda.notemarks.ui
+package id.muhariananda.notemarks.ui.note
 
 import android.app.Application
 import android.text.TextUtils
@@ -9,9 +9,10 @@ import id.muhariananda.notemarks.data.note.models.Priority
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SharedViewModel(application: Application) : AndroidViewModel(application) {
+class NoteSharedViewModel(application: Application) : AndroidViewModel(application) {
 
     val emptyNotes: MutableLiveData<Boolean> = MutableLiveData(true)
+    val mPriority: MutableLiveData<Priority> = MutableLiveData(Priority.LOW)
 
     fun checkNotesIfEmpty(notes: List<Note>) {
         emptyNotes.value = notes.isEmpty()
@@ -23,12 +24,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         } else !(title.isEmpty() || content.isEmpty())
     }
 
-    fun parsePriority(priority: String): Priority {
-        return when (priority) {
-            "High priority" -> Priority.HIGH
-            "Medium priority" -> Priority.MEDIUM
-            "Low priority" -> Priority.LOW
-            else -> Priority.LOW
+    fun parsePriority(priority: String) {
+        when (priority) {
+            "High priority" -> mPriority.value = Priority.HIGH
+            "Medium priority" -> mPriority.value = Priority.MEDIUM
+            "Low priority" -> mPriority.value = Priority.LOW
         }
     }
 

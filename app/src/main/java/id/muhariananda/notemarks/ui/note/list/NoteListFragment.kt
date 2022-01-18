@@ -16,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import id.muhariananda.notemarks.common.SwipeToDelete
 import id.muhariananda.notemarks.data.note.models.Note
 import id.muhariananda.notemarks.databinding.FragmentNoteListBinding
-import id.muhariananda.notemarks.ui.SharedViewModel
+import id.muhariananda.notemarks.ui.note.NoteSharedViewModel
 import id.muhariananda.notemarks.ui.note.NoteViewModel
 
 class NoteListFragment : Fragment() {
@@ -25,7 +25,7 @@ class NoteListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val mNoteViewModel: NoteViewModel by viewModels()
-    private val mSharedViewModel: SharedViewModel by viewModels()
+    private val mNoteSharedViewModel: NoteSharedViewModel by viewModels()
 
     private val adapter: NoteListAdapter by lazy { NoteListAdapter() }
 
@@ -41,7 +41,7 @@ class NoteListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = this
-        binding.mSharedViewModel = mSharedViewModel
+        binding.mSharedViewModel = mNoteSharedViewModel
 
         setupRecyclerView()
     }

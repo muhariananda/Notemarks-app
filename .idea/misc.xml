@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bg_bottom_gradient.xml" value="0.2123076923076923" />
         <entry key="app/src/main/res/drawable/bg_bottom_nav.xml" value="0.215625" />
         <entry key="app/src/main/res/drawable/bg_bottom_sheet_dilaog.xml" value="0.215625" />
         <entry key="app/src/main/res/drawable/bg_search_view.xml" value="0.215625" />
