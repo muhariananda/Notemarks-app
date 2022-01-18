@@ -31,7 +31,7 @@ class BindingAdapters {
         @BindingAdapter("android:emptyNotes")
         @JvmStatic
         fun View.emptyNotes(emptyNotes: MutableLiveData<Boolean>) {
-            when(emptyNotes.value) {
+            when (emptyNotes.value) {
                 true -> this.visibility = View.VISIBLE
                 else -> this.visibility = View.INVISIBLE
             }
@@ -49,10 +49,31 @@ class BindingAdapters {
         @BindingAdapter("android:parsePriorityColor")
         @JvmStatic
         fun CardView.parsePriorityColor(priority: Priority) {
-            when(priority) {
-                Priority.HIGH -> { this.setCardBackgroundColor(ContextCompat.getColor(this.context, R.color.semantic_red)) }
-                Priority.MEDIUM -> { this.setCardBackgroundColor(ContextCompat.getColor(this.context, R.color.semantic_yellow)) }
-                Priority.LOW -> { this.setCardBackgroundColor(ContextCompat.getColor(this.context, R.color.semantic_green)) }
+            when (priority) {
+                Priority.HIGH -> {
+                    this.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            this.context,
+                            R.color.semantic_red
+                        )
+                    )
+                }
+                Priority.MEDIUM -> {
+                    this.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            this.context,
+                            R.color.semantic_yellow
+                        )
+                    )
+                }
+                Priority.LOW -> {
+                    this.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            this.context,
+                            R.color.semantic_green
+                        )
+                    )
+                }
             }
         }
 
@@ -60,7 +81,9 @@ class BindingAdapters {
         @JvmStatic
         fun CardView.senDataToNoteUpdateFragment(currentNote: Note) {
             this.setOnClickListener {
-                val action = NoteListFragmentDirections.actionNoteListFragmentToNoteUpdateFragment(currentNote)
+                val action = NoteListFragmentDirections.actionNoteListFragmentToNoteUpdateFragment(
+                    currentNote
+                )
                 this.findNavController().navigate(action)
             }
         }

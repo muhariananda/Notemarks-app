@@ -8,25 +8,25 @@ import id.muhariananda.notemarks.common.NoteDiffUtil
 import id.muhariananda.notemarks.data.note.models.Note
 import id.muhariananda.notemarks.databinding.ItemRowNoteBinding
 
-class NoteListAdapter: RecyclerView.Adapter<NoteListAdapter.MyViewHolder>() {
+class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.MyViewHolder>() {
 
     var notesList = emptyList<Note>()
 
-    class MyViewHolder(private val binding: ItemRowNoteBinding):
+    class MyViewHolder(private val binding: ItemRowNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(note: Note) {
-                binding.note = note
-                binding.executePendingBindings()
-            }
+        fun bind(note: Note) {
+            binding.note = note
+            binding.executePendingBindings()
+        }
 
-            companion object {
-                fun from(parent: ViewGroup): MyViewHolder {
-                    val layoutInflater = LayoutInflater.from(parent.context)
-                    val binding = ItemRowNoteBinding.inflate(layoutInflater, parent, false)
-                    return MyViewHolder(binding)
-                }
+        companion object {
+            fun from(parent: ViewGroup): MyViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemRowNoteBinding.inflate(layoutInflater, parent, false)
+                return MyViewHolder(binding)
             }
         }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder.from(parent)

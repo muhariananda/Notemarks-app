@@ -1,7 +1,6 @@
 package id.muhariananda.notemarks.ui.note
 
 import android.app.Application
-import android.text.TextUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import id.muhariananda.notemarks.data.note.models.Note

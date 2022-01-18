@@ -1,8 +1,8 @@
 package id.muhariananda.notemarks
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import id.muhariananda.notemarks.databinding.ActivityMainBinding
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             bottomNav.setupWithNavController(navController)
 
             navController.addOnDestinationChangedListener { _, destination, _ ->
-                bottomNav.visibility = when(destination.id) {
+                bottomNav.visibility = when (destination.id) {
                     R.id.noteListFragment -> View.VISIBLE
                     R.id.toDoListFragment -> View.VISIBLE
                     else -> View.GONE

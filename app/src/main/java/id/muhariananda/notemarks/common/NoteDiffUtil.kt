@@ -6,7 +6,7 @@ import id.muhariananda.notemarks.data.note.models.Note
 class NoteDiffUtil(
     private val oldList: List<Note>,
     private val newList: List<Note>
-): DiffUtil.Callback() {
+) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return oldList.size
     }

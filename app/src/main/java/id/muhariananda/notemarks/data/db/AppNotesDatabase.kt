@@ -15,7 +15,7 @@ import id.muhariananda.notemarks.data.note.models.Note
     exportSchema = false
 )
 @TypeConverters(Converter::class)
-abstract class AppNotesDatabase: RoomDatabase() {
+abstract class AppNotesDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
 
     companion object {

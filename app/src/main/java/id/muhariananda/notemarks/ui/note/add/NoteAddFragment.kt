@@ -1,18 +1,16 @@
 package id.muhariananda.notemarks.ui.note.add
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.data.note.models.Note
-import id.muhariananda.notemarks.data.note.models.Priority
 import id.muhariananda.notemarks.databinding.FragmentNoteAddBinding
 import id.muhariananda.notemarks.ui.note.NoteSharedViewModel
 import id.muhariananda.notemarks.ui.note.NoteViewModel
@@ -50,7 +48,7 @@ class NoteAddFragment : Fragment() {
                 findNavController().popBackStack()
             }
             toolbarNoteAdd.setOnMenuItemClickListener { item ->
-                when(item.itemId) {
+                when (item.itemId) {
                     R.id.note_add_save -> {
                         insertNoteToDB()
                         true
