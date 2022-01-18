@@ -1,4 +1,4 @@
-package id.muhariananda.notemarks.common
+package id.muhariananda.notemarks.ui.note.list
 
 import androidx.recyclerview.widget.DiffUtil
 import id.muhariananda.notemarks.data.note.models.Note

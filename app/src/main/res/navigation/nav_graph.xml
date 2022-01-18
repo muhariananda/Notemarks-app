@@ -29,23 +29,12 @@
         android:id="@+id/noteAddFragment"
         android:name="id.muhariananda.notemarks.ui.note.add.NoteAddFragment"
         android:label="Add Note"
-        tools:layout="@layout/fragment_note_add" >
-        <action
-            android:id="@+id/action_noteAddFragment_to_noteListFragment"
-            app:destination="@id/noteListFragment"
-            app:enterAnim="@anim/from_left"
-            app:exitAnim="@anim/to_right" />
-    </fragment>
+        tools:layout="@layout/fragment_note_add" />
     <fragment
         android:id="@+id/noteUpdateFragment"
         android:name="id.muhariananda.notemarks.ui.note.update.NoteUpdateFragment"
         android:label="Update Note"
         tools:layout="@layout/fragment_note_update" >
-        <action
-            android:id="@+id/action_noteUpdateFragment_to_noteListFragment"
-            app:destination="@id/noteListFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left" />
         <argument
             android:name="currentNote"
             app:argType="id.muhariananda.notemarks.data.note.models.Note" />
@@ -54,5 +43,26 @@
         android:id="@+id/toDoListFragment"
         android:name="id.muhariananda.notemarks.ui.todo.list.ToDoListFragment"
         android:label="fragment_to_do_list"
-        tools:layout="@layout/fragment_to_do_list" />
+        tools:layout="@layout/fragment_to_do_list" >
+        <action
+            android:id="@+id/action_toDoListFragment_to_todoAddFragment"
+            app:destination="@id/todoAddFragment" />
+        <action
+            android:id="@+id/action_toDoListFragment_to_todoUpdateFragment"
+            app:destination="@id/todoUpdateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/todoAddFragment"
+        android:name="id.muhariananda.notemarks.ui.todo.add.TodoAddFragment"
+        android:label="fragment_todo_add"
+        tools:layout="@layout/fragment_todo_add" />
+    <fragment
+        android:id="@+id/todoUpdateFragment"
+        android:name="id.muhariananda.notemarks.ui.todo.update.TodoUpdateFragment"
+        android:label="fragment_todo_update"
+        tools:layout="@layout/fragment_todo_update" >
+        <argument
+            android:name="currentTodo"
+            app:argType="id.muhariananda.notemarks.data.todo.models.ToDo" />
+    </fragment>
 </navigation>

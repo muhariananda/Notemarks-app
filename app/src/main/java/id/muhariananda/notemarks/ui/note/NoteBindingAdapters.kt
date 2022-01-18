@@ -1,4 +1,4 @@
-package id.muhariananda.notemarks.ui.utils
+package id.muhariananda.notemarks.ui.note
 
 import android.view.View
 import androidx.cardview.widget.CardView
@@ -11,7 +11,6 @@ import com.google.android.material.chip.ChipGroup
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.data.note.models.Note
 import id.muhariananda.notemarks.data.note.models.Priority
-import id.muhariananda.notemarks.ui.note.NoteSharedViewModel
 import id.muhariananda.notemarks.ui.note.list.NoteListFragmentDirections
 
 class BindingAdapters {
@@ -87,6 +86,5 @@ class BindingAdapters {
                 this.findNavController().navigate(action)
             }
         }
-
     }
 }
