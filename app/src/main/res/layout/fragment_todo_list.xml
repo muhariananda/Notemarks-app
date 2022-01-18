@@ -38,16 +38,15 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
                     android:text="@string/text_to_do"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/primary"
-                    android:textSize="21sp"
-                    android:textStyle="bold" />
+                    android:textSize="21sp" />
 
             </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/sv_todo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

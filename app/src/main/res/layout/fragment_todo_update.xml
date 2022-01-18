@@ -26,6 +26,7 @@
             android:background="@null"
             android:ems="10"
             android:hint="@string/text_hint_todo"
+            android:imeOptions="actionSend|flagNoEnterAction"
             android:inputType="text"
             android:minHeight="48dp"
             android:paddingHorizontal="8dp"

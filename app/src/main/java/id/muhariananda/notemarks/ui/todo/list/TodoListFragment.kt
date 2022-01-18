@@ -9,12 +9,14 @@ import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.SwipeToDelete
+import id.muhariananda.notemarks.common.observeOnce
 import id.muhariananda.notemarks.data.todo.models.Todo
 import id.muhariananda.notemarks.databinding.FragmentTodoListBinding
 import id.muhariananda.notemarks.ui.todo.TodoSharedViewModel
@@ -47,6 +49,7 @@ class TodoListFragment : Fragment() {
 
         setupRecyclerView()
         setupMenu()
+        setupSearchView()
     }
 
     override fun onDestroy() {
@@ -137,17 +140,23 @@ class TodoListFragment : Fragment() {
     private fun setupSearchView() {
         binding.svTodo.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-
+                query?.let { searchTodo(it) }
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                TODO("Not yet implemented")
+                newText?.let { searchTodo(it) }
+                return true
             }
         })
     }
 
     private fun searchTodo(query: String) {
         val searchQuery = "%$query%"
-        mTodoViewModel
+        mTodoViewModel.searchTodo(searchQuery).observeOnce(viewLifecycleOwner, { list ->
+            list?.let {
+                adapter.saveTodo(it)
+            }
+        })
     }
 }

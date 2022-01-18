@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearanceOverlay.Demo</item>
     </style>
 
     <style name="ThemeOverlay.Notemarks.Chip.Choice"
@@ -26,5 +27,9 @@
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.Demo" parent="">
+        <item name="cornerSize">24dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
 
 </resources>
