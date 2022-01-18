@@ -30,7 +30,20 @@
                 android:id="@+id/toolbar_todo"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/background" />
+                android:background="@color/background"
+                app:menu="@menu/menu_top_todo_list">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:text="@string/text_to_do"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/primary"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 

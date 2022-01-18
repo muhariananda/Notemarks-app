@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.SwipeToDelete
 import id.muhariananda.notemarks.data.todo.models.Todo
 import id.muhariananda.notemarks.databinding.FragmentTodoListBinding
@@ -44,6 +46,7 @@ class TodoListFragment : Fragment() {
         binding.mTodoSharedViewModel = mTodoSharedViewModel
 
         setupRecyclerView()
+        setupMenu()
     }
 
     override fun onDestroy() {
@@ -65,6 +68,15 @@ class TodoListFragment : Fragment() {
             mTodoSharedViewModel.checkTodosIfEmpty(todos)
             adapter.saveTodo(todos)
         })
+
+        adapter.listener = { item, isChecked ->
+            val todo = Todo(
+                item.id,
+                item.title,
+                isChecked
+            )
+            mTodoViewModel.updateTodo(todo)
+        }
     }
 
     private fun swipeToDelete(recyclerView: RecyclerView) {
@@ -93,6 +105,18 @@ class TodoListFragment : Fragment() {
         }.show()
     }
 
+    private fun setupMenu() {
+        binding.toolbarTodo.setOnMenuItemClickListener { item ->
+            when(item.itemId) {
+                R.id.action_removal_todo -> {
+                    confirmRemoval()
+                    true
+                }
+                else -> onOptionsItemSelected(item)
+            }
+        }
+    }
+
     private fun confirmRemoval() {
         val builder = AlertDialog.Builder(requireContext())
         builder.apply {
@@ -108,5 +132,22 @@ class TodoListFragment : Fragment() {
             setTitle("Delete All Todos")
             setMessage("Are you sure want to delete all?")
         }.show()
+    }
+
+    private fun setupSearchView() {
+        binding.svTodo.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    private fun searchTodo(query: String) {
+        val searchQuery = "%$query%"
+        mTodoViewModel
     }
 }

@@ -26,4 +26,7 @@ class ToDoRepository(private val todoDao: TodoDao) {
         todoDao.deleteAllTodos()
     }
 
+    fun searchTodo(searchQuery: String) =
+        todoDao.searchTodo(searchQuery)
+
 }

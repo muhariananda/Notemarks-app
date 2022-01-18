@@ -30,6 +30,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:parseCheck="@{todo}"
+                android:buttonTint="@color/hint"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -42,6 +43,7 @@
                 android:text="@{todo.title}"
                 android:textColor="@color/text"
                 android:textSize="14sp"
+                android:changeTextColorIfChecked="@{todo}"
                 app:layout_constraintBottom_toBottomOf="@+id/checkBox"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/checkBox"

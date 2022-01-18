@@ -18,11 +18,12 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_note_add.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_note_bottom_dialog.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/fragment_note_list.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_note_list.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_note_update.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_to_do_list.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_todo_add.xml" value="0.2820143884892086" />
+        <entry key="app/src/main/res/layout/fragment_todo_add.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_todo_list.xml" value="0.19947916666666668" />
+        <entry key="app/src/main/res/layout/fragment_todo_update.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/item_row_note.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_row_to_do.xml" value="0.33" />
         <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.19947916666666668" />
@@ -30,6 +31,7 @@
         <entry key="app/src/main/res/menu/menu_top_note_add.xml" value="0.2" />
         <entry key="app/src/main/res/menu/menu_top_note_list.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/menu/menu_top_note_update.xml" value="0.19947916666666668" />
+        <entry key="app/src/main/res/menu/menu_top_todo_list.xml" value="0.19947916666666668" />
       </map>
     </option>
   </component>

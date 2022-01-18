@@ -20,4 +20,9 @@
     <string name="text_menu_sort_by_high">Sort by High</string>
     <string name="text_menu_sort_by_low">Sort by Low</string>
     <string name="text_add_to_do">Add To Do</string>
+    <string name="text_hint_todo">Enter task..</string>
+    <string name="text_update">Update</string>
+    <string name="text_todo_done">Done</string>
+    <string name="text_to_do">To Do</string>
+    <string name="text_delete_all_todos">Delete All Todos</string>
 </resources>

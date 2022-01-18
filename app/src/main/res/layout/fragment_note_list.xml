@@ -39,8 +39,9 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
                     android:text="@string/notes"
+                    android:fontFamily="@font/poppins_semibold"
                     android:textColor="@color/primary"
-                    android:textSize="18sp"
+                    android:textSize="21sp"
                     android:textStyle="bold" />
 
             </com.google.android.material.appbar.MaterialToolbar>

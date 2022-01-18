@@ -1,7 +1,9 @@
 package id.muhariananda.notemarks.ui.todo
 
+import android.graphics.Color
 import android.view.View
 import android.widget.CheckBox
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
@@ -39,7 +41,7 @@ class TodoBindingAdapters {
         @BindingAdapter("android:checkTodosEmpty")
         @JvmStatic
         fun View.checkTodosEmpty(emptyTodos: MutableLiveData<Boolean>) {
-            when(emptyTodos.value) {
+            when (emptyTodos.value) {
                 true -> this.visibility = View.VISIBLE
                 else -> this.visibility = View.INVISIBLE
             }
@@ -49,7 +51,12 @@ class TodoBindingAdapters {
         @JvmStatic
         fun CheckBox.parseCheck(todo: Todo) {
             this.isChecked = todo.isDone
-            this.isEnabled = !todo.isDone
+        }
+
+        @BindingAdapter("android:changeTextColorIfChecked")
+        @JvmStatic
+        fun TextView.changeTextColorIfChecked(todo: Todo) {
+            if (todo.isDone) this.setTextColor(Color.LTGRAY)
         }
     }
 }
