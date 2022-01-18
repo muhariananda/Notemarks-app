@@ -14,4 +14,9 @@
     <string name="text_high_priority">High priority</string>
     <string name="text_no_notes">No notes</string>
     <string name="text_hint_note_title">Title..</string>
+    <string name="text_menu_delete_notes">Delete All</string>
+    <string name="notes">Notes</string>
+    <string name="text_menu_sort_by">Sort By</string>
+    <string name="text_menu_sort_by_high">Sort by High</string>
+    <string name="text_menu_sort_by_low">Sort by Low</string>
 </resources>

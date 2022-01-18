@@ -27,16 +27,18 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_note_list"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/background"
-                android:elevation="@null">
+                android:elevation="@null"
+                app:menu="@menu/menu_top_note_list">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Notes"
+                    android:paddingStart="16dp"
+                    android:text="@string/notes"
                     android:textColor="@color/primary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -45,7 +47,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/sv_list_note"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

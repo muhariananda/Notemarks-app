@@ -25,6 +25,7 @@
         <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/menu/menu_note_add.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/menu/menu_top_note_add.xml" value="0.2" />
+        <entry key="app/src/main/res/menu/menu_top_note_list.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/menu/menu_top_note_update.xml" value="0.19947916666666668" />
       </map>
     </option>

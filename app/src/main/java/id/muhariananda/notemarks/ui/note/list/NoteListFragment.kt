@@ -1,26 +1,28 @@
 package id.muhariananda.notemarks.ui.note.list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.SwipeToDelete
 import id.muhariananda.notemarks.data.note.models.Note
 import id.muhariananda.notemarks.databinding.FragmentNoteListBinding
 import id.muhariananda.notemarks.ui.note.NoteSharedViewModel
 import id.muhariananda.notemarks.ui.note.NoteViewModel
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 class NoteListFragment : Fragment() {
-
     private var _binding: FragmentNoteListBinding? = null
     private val binding get() = _binding!!
 
@@ -43,12 +45,63 @@ class NoteListFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.mSharedViewModel = mNoteSharedViewModel
 
+        setupMenu()
         setupRecyclerView()
+        setupSearchView()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun setupMenu() {
+        binding.toolbarNoteList.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_delete_all_note -> {
+                    confirmRemoval()
+                    true
+                }
+                R.id.action_high_priority -> {
+                    mNoteViewModel.sortByHighPriority.observe(viewLifecycleOwner, {
+                        adapter.saveNotes(it)
+                    })
+                    true
+                }
+                R.id.action_low_priority -> {
+                    mNoteViewModel.sortByLowPriority.observe(viewLifecycleOwner, {
+                        adapter.saveNotes(it)
+                    })
+                    true
+                }
+                else -> super.onContextItemSelected(item)
+            }
+        }
+    }
+
+    private fun setupSearchView() {
+        binding.svListNote.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    query?.let { searchNote(it) }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    newText?.let { searchNote(it) }
+                    return true
+                }
+            }
+        )
+    }
+
+    private fun searchNote(query: String) {
+        val searchQuery = "%$query%"
+        mNoteViewModel.searchNote(searchQuery).observe(viewLifecycleOwner, { list ->
+            list?.let {
+                adapter.saveNotes(list)
+            }
+        })
     }
 
     private fun setupRecyclerView() {
@@ -57,6 +110,9 @@ class NoteListFragment : Fragment() {
             rvListNote.layoutManager = StaggeredGridLayoutManager(
                 2, StaggeredGridLayoutManager.VERTICAL
             )
+            rvListNote.itemAnimator = SlideInUpAnimator().apply {
+                addDuration = 300
+            }
 
             mNoteViewModel.getAllNotes.observe(viewLifecycleOwner, Observer { notes ->
                 mSharedViewModel?.checkNotesIfEmpty(notes)

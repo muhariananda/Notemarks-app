@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_sort"
+            android:title="@string/text_menu_sort_by">
+            <menu>
+                <item
+                    android:id="@+id/action_high_priority"
+                    android:title="@string/text_menu_sort_by_high"/>
+
+                <item
+                    android:id="@+id/action_low_priority"
+                    android:title="@string/text_menu_sort_by_low"/>
+            </menu>
+        </item>
+    </group>
+
+    <item
+        android:id="@+id/action_delete_all_note"
+        android:title="@string/text_menu_delete_notes"/>
+
+</menu>

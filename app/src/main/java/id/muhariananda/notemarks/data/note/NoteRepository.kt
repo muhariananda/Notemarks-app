@@ -6,8 +6,15 @@ import kotlinx.coroutines.flow.Flow
 class NoteRepository(
     private val noteDao: NoteDao
 ) {
+
     val notesFlow: Flow<List<Note>>
         get() = noteDao.getNotes()
+
+    val sortByHighPriority: Flow<List<Note>>
+        get() = noteDao.sortByPriorityHigh()
+
+    val sortByLowPriority: Flow<List<Note>>
+        get() = noteDao.sortByPriorityLow()
 
     suspend fun insertNote(note: Note) {
         noteDao.insertNote(note)
@@ -24,4 +31,8 @@ class NoteRepository(
     suspend fun deleteAllNotes() {
         noteDao.deleteAllNotes()
     }
+
+    fun searchNote(searchQuery: String) =
+        noteDao.searchNote(searchQuery)
+
 }
