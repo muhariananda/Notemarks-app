@@ -54,11 +54,12 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/bg_search_view"
-            android:queryBackground="@null"
+            android:queryBackground="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
+            app:queryBackground="@android:color/transparent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list_note"
