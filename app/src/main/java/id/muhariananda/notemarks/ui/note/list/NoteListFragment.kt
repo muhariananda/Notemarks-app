@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.SwipeToDelete
 import id.muhariananda.notemarks.common.hideKeyboard
+import id.muhariananda.notemarks.common.observeOnce
 import id.muhariananda.notemarks.data.note.models.Note
 import id.muhariananda.notemarks.databinding.FragmentNoteListBinding
 import id.muhariananda.notemarks.ui.note.NoteSharedViewModel
@@ -101,9 +102,9 @@ class NoteListFragment : Fragment() {
 
     private fun searchNote(query: String) {
         val searchQuery = "%$query%"
-        mNoteViewModel.searchNote(searchQuery).observe(viewLifecycleOwner, { list ->
+        mNoteViewModel.searchNote(searchQuery).observeOnce(viewLifecycleOwner, { list ->
             list?.let {
-                adapter.saveNotes(list)
+                adapter.saveNotes(it)
             }
         })
     }

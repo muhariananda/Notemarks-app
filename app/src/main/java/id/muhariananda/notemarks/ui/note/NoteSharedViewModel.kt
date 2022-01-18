@@ -19,9 +19,7 @@ class NoteSharedViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     fun validationNoteForm(title: String, content: String): Boolean {
-        return if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
-            false
-        } else !(title.isEmpty() || content.isEmpty())
+        return !(title.isEmpty() || content.isEmpty())
     }
 
     fun parsePriority(priority: String) {
