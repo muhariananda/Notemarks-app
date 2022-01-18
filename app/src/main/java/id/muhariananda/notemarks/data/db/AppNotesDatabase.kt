@@ -8,15 +8,17 @@ import androidx.room.TypeConverters
 import id.muhariananda.notemarks.common.Converter
 import id.muhariananda.notemarks.data.note.NoteDao
 import id.muhariananda.notemarks.data.note.models.Note
+import id.muhariananda.notemarks.data.todo.ToDoDao
 
 @Database(
     entities = [Note::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converter::class)
 abstract class AppNotesDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
+    abstract fun toDoDao(): ToDoDao
 
     companion object {
 

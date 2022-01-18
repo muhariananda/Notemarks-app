@@ -19,4 +19,5 @@
     <string name="text_menu_sort_by">Sort By</string>
     <string name="text_menu_sort_by_high">Sort by High</string>
     <string name="text_menu_sort_by_low">Sort by Low</string>
+    <string name="text_add_to_do">Add To Do</string>
 </resources>
