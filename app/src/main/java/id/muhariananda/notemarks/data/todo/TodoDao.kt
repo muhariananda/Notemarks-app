@@ -1,7 +1,7 @@
 package id.muhariananda.notemarks.data.todo
 
 import androidx.room.*
-import id.muhariananda.notemarks.data.todo.models.Todo
+import id.muhariananda.notemarks.data.entities.Todo
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -9,7 +9,6 @@ import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,10 +16,10 @@ import com.google.android.material.snackbar.Snackbar
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.SwipeToDelete
 import id.muhariananda.notemarks.common.observeOnce
-import id.muhariananda.notemarks.data.todo.models.Todo
+import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.databinding.FragmentTodoListBinding
-import id.muhariananda.notemarks.ui.todo.TodoSharedViewModel
-import id.muhariananda.notemarks.ui.todo.TodoViewModel
+import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
+import id.muhariananda.notemarks.ui.viewmodels.TodoViewModel
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 class TodoListFragment : Fragment() {
@@ -28,8 +27,8 @@ class TodoListFragment : Fragment() {
     private var _binding: FragmentTodoListBinding? = null
     private val binding get() = _binding!!
 
-    private val mTodoViewModel: TodoViewModel by viewModels()
-    private val mTodoSharedViewModel: TodoSharedViewModel by viewModels()
+    private val viewModel: TodoViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by viewModels()
 
     private val adapter: TodoListAdapter by lazy { TodoListAdapter() }
 
@@ -45,7 +44,7 @@ class TodoListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.mTodoSharedViewModel = mTodoSharedViewModel
+        binding.sharedViewModel = sharedViewModel
 
         setupRecyclerView()
         setupMenu()
@@ -55,6 +54,18 @@ class TodoListFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun setupMenu() {
+        binding.toolbarTodo.setOnMenuItemClickListener { item ->
+            when(item.itemId) {
+                R.id.action_removal_todo -> {
+                    confirmRemoval()
+                    true
+                }
+                else -> onOptionsItemSelected(item)
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -67,10 +78,10 @@ class TodoListFragment : Fragment() {
             swipeToDelete(rvTodo)
         }
 
-        mTodoViewModel.todos.observe(viewLifecycleOwner, { todos ->
-            mTodoSharedViewModel.checkTodosIfEmpty(todos)
+        viewModel.todos.observe(viewLifecycleOwner) { todos ->
+            sharedViewModel.checkTodoIfEmpty(todos)
             adapter.saveTodo(todos)
-        })
+        }
 
         adapter.listener = { item, isChecked ->
             val todo = Todo(
@@ -78,7 +89,7 @@ class TodoListFragment : Fragment() {
                 item.title,
                 isChecked
             )
-            mTodoViewModel.updateTodo(todo)
+            viewModel.updateTodo(todo)
         }
     }
 
@@ -86,7 +97,7 @@ class TodoListFragment : Fragment() {
         val swipeToDeleteCallback = object : SwipeToDelete() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val itemToDelete = adapter.todoList[viewHolder.adapterPosition]
-                mTodoViewModel.deleteTodo(itemToDelete)
+                viewModel.deleteTodo(itemToDelete)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 restoreDeleteTodo(viewHolder.itemView, itemToDelete)
             }
@@ -103,21 +114,9 @@ class TodoListFragment : Fragment() {
         )
         snackBar.apply {
             setAction("Undo") {
-                mTodoViewModel.insertTodo(deleteItem)
+                viewModel.insertTodo(deleteItem)
             }
         }.show()
-    }
-
-    private fun setupMenu() {
-        binding.toolbarTodo.setOnMenuItemClickListener { item ->
-            when(item.itemId) {
-                R.id.action_removal_todo -> {
-                    confirmRemoval()
-                    true
-                }
-                else -> onOptionsItemSelected(item)
-            }
-        }
     }
 
     private fun confirmRemoval() {
@@ -125,7 +124,7 @@ class TodoListFragment : Fragment() {
         builder.apply {
             setNegativeButton("No") { _, _ -> }
             setPositiveButton("Yes") { _, _ ->
-                mTodoViewModel.deleteAllTodos()
+                viewModel.deleteAllTodos()
                 Toast.makeText(
                     requireContext(),
                     "Successfully to remove all todos",
@@ -153,10 +152,10 @@ class TodoListFragment : Fragment() {
 
     private fun searchTodo(query: String) {
         val searchQuery = "%$query%"
-        mTodoViewModel.searchTodo(searchQuery).observeOnce(viewLifecycleOwner, { list ->
+        viewModel.searchTodo(searchQuery).observeOnce(viewLifecycleOwner) { list ->
             list?.let {
                 adapter.saveTodo(it)
             }
-        })
+        }
     }
 }

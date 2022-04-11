@@ -7,7 +7,7 @@
 
         <variable
             name="todo"
-            type="id.muhariananda.notemarks.data.todo.models.Todo" />
+            type="id.muhariananda.notemarks.data.entities.Todo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

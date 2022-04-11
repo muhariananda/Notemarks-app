@@ -7,16 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.chip.Chip
 import id.muhariananda.notemarks.R
-import id.muhariananda.notemarks.data.note.models.Note
-import id.muhariananda.notemarks.data.note.models.Priority
+import id.muhariananda.notemarks.data.entities.Priority
 import id.muhariananda.notemarks.databinding.FragmentNoteUpdateBinding
-import id.muhariananda.notemarks.ui.note.NoteSharedViewModel
-import id.muhariananda.notemarks.ui.note.NoteViewModel
+import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
+import id.muhariananda.notemarks.ui.viewmodels.NoteViewModel
 
 class NoteUpdateFragment : Fragment() {
 
@@ -25,8 +24,8 @@ class NoteUpdateFragment : Fragment() {
 
     private val args by navArgs<NoteUpdateFragmentArgs>()
 
-    private val mNoteViewModel: NoteViewModel by viewModels()
-    private val mNoteSharedViewModel: NoteSharedViewModel by viewModels()
+    private val noteViewModel: NoteViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,8 +37,14 @@ class NoteUpdateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.note = args.currentNote
-        setupMenuUpdate()
+
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = sharedViewModel
+            note = args.currentNote
+        }
+
+        setupUpdateMenu()
         setupChip()
     }
 
@@ -48,7 +53,7 @@ class NoteUpdateFragment : Fragment() {
         _binding = null
     }
 
-    private fun setupMenuUpdate() {
+    private fun setupUpdateMenu() {
         binding.apply {
             toolbarNoteUpdate.setNavigationOnClickListener {
                 findNavController().popBackStack()
@@ -56,7 +61,7 @@ class NoteUpdateFragment : Fragment() {
             toolbarNoteUpdate.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.note_update_save -> {
-                        updateNoteToDB()
+                        updateNote()
                         true
                     }
                     R.id.note_update_delete -> {
@@ -78,29 +83,22 @@ class NoteUpdateFragment : Fragment() {
                 Priority.MEDIUM -> chipMediumUpdate.isChecked = true
                 Priority.HIGH -> chipHighUpdate.isChecked = true
             }
-
-            chipGroupNoteUpdate.setOnCheckedChangeListener { group, checkedId ->
-                val titleOrNull = group.findViewById<Chip>(checkedId)?.text.toString()
-                mNoteSharedViewModel.parsePriority(titleOrNull)
-            }
         }
     }
 
-    private fun updateNoteToDB() {
+    private fun updateNote() {
         binding.apply {
             val title = edtNoteUpdateTitle.text.toString()
             val content = edtNoteUpdateContent.text.toString()
+            val validation = sharedViewModel.validationNoteForm(title, content)
 
-            val validation = mNoteSharedViewModel.validationNoteForm(title, content)
             if (validation) {
-                val noteUpdate = Note(
-                    args.currentNote.id,
-                    title,
-                    content,
-                    args.currentNote.date,
-                    mNoteSharedViewModel.mPriority.value!!
+                val note = args.currentNote.copy(
+                    title = title,
+                    content = content,
+                    priority = sharedViewModel.priority.value!!
                 )
-                mNoteViewModel.updateNote(noteUpdate)
+                noteViewModel.updateNote(note)
                 Toast.makeText(requireContext(), "Update Successfully", Toast.LENGTH_LONG).show()
                 findNavController().popBackStack()
             } else {
@@ -114,7 +112,7 @@ class NoteUpdateFragment : Fragment() {
         builder.apply {
             setNegativeButton("No") { _, _ -> }
             setPositiveButton("Yes") { _, _ ->
-                mNoteViewModel.deleteNote(args.currentNote)
+                noteViewModel.deleteNote(args.currentNote)
                 Toast.makeText(
                     requireContext(),
                     "Successfully to remove ${args.currentNote.title}",

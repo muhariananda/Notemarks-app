@@ -1,4 +1,4 @@
-package id.muhariananda.notemarks.data.note.models
+package id.muhariananda.notemarks.data.entities
 
 enum class Priority {
     LOW,

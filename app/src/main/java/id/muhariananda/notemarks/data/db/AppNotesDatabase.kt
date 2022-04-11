@@ -7,9 +7,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import id.muhariananda.notemarks.common.Converter
 import id.muhariananda.notemarks.data.note.NoteDao
-import id.muhariananda.notemarks.data.note.models.Note
+import id.muhariananda.notemarks.data.entities.Note
 import id.muhariananda.notemarks.data.todo.TodoDao
-import id.muhariananda.notemarks.data.todo.models.Todo
+import id.muhariananda.notemarks.data.entities.Todo
 
 @Database(
     entities = [Note::class, Todo::class],

@@ -1,12 +1,12 @@
-package id.muhariananda.notemarks.ui.todo
+package id.muhariananda.notemarks.ui.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import id.muhariananda.notemarks.data.ToDoRepository
+import id.muhariananda.notemarks.data.todo.ToDoRepository
 import id.muhariananda.notemarks.data.db.AppNotesDatabase
-import id.muhariananda.notemarks.data.todo.models.Todo
+import id.muhariananda.notemarks.data.entities.Todo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

@@ -1,7 +1,7 @@
 package id.muhariananda.notemarks.common
 
 import androidx.room.TypeConverter
-import id.muhariananda.notemarks.data.note.models.Priority
+import id.muhariananda.notemarks.data.entities.Priority
 
 class Converter {
 

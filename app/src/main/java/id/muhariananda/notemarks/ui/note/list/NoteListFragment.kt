@@ -17,10 +17,10 @@ import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.SwipeToDelete
 import id.muhariananda.notemarks.common.hideKeyboard
 import id.muhariananda.notemarks.common.observeOnce
-import id.muhariananda.notemarks.data.note.models.Note
+import id.muhariananda.notemarks.data.entities.Note
 import id.muhariananda.notemarks.databinding.FragmentNoteListBinding
-import id.muhariananda.notemarks.ui.note.NoteSharedViewModel
-import id.muhariananda.notemarks.ui.note.NoteViewModel
+import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
+import id.muhariananda.notemarks.ui.viewmodels.NoteViewModel
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 class NoteListFragment : Fragment() {
@@ -28,7 +28,7 @@ class NoteListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val mNoteViewModel: NoteViewModel by viewModels()
-    private val mNoteSharedViewModel: NoteSharedViewModel by viewModels()
+    private val mSharedViewModel: SharedViewModel by viewModels()
 
     private val adapter: NoteListAdapter by lazy { NoteListAdapter() }
 
@@ -44,7 +44,7 @@ class NoteListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = this
-        binding.mSharedViewModel = mNoteSharedViewModel
+        binding.mSharedViewModel = mSharedViewModel
 
         setupMenu()
         setupRecyclerView()
@@ -122,7 +122,7 @@ class NoteListFragment : Fragment() {
         }
 
         mNoteViewModel.getAllNotes.observe(viewLifecycleOwner, { notes ->
-            mNoteSharedViewModel.checkNotesIfEmpty(notes)
+            mSharedViewModel.checkNotesIfEmpty(notes)
             adapter.saveNotes(notes)
         })
     }

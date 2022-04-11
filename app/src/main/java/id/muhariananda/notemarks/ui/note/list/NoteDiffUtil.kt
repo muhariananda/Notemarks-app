@@ -1,7 +1,7 @@
 package id.muhariananda.notemarks.ui.note.list
 
 import androidx.recyclerview.widget.DiffUtil
-import id.muhariananda.notemarks.data.note.models.Note
+import id.muhariananda.notemarks.data.entities.Note
 
 class NoteDiffUtil(
     private val oldList: List<Note>,

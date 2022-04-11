@@ -9,9 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import id.muhariananda.notemarks.data.todo.models.Todo
+import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.databinding.FragmentTodoUpdateBinding
-import id.muhariananda.notemarks.ui.todo.TodoViewModel
+import id.muhariananda.notemarks.ui.viewmodels.TodoViewModel
 
 class TodoUpdateFragment : BottomSheetDialogFragment() {
 

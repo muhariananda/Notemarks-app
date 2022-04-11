@@ -1,4 +1,4 @@
-package id.muhariananda.notemarks.data.note.models
+package id.muhariananda.notemarks.data.entities
 
 import android.os.Parcelable
 import androidx.room.Entity

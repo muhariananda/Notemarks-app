@@ -1,7 +1,7 @@
 package id.muhariananda.notemarks.ui.todo.list
 
 import androidx.recyclerview.widget.DiffUtil
-import id.muhariananda.notemarks.data.todo.models.Todo
+import id.muhariananda.notemarks.data.entities.Todo
 
 class TodoDiffUtil(
     private val oldList: List<Todo>,

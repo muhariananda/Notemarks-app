@@ -1,12 +1,10 @@
 package id.muhariananda.notemarks.ui.todo.list
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import id.muhariananda.notemarks.data.todo.models.Todo
+import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.databinding.ItemRowToDoBinding
 
 class TodoListAdapter : RecyclerView.Adapter<TodoListAdapter.ViewHolder>() {

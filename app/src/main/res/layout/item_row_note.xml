@@ -7,7 +7,7 @@
 
         <variable
             name="note"
-            type="id.muhariananda.notemarks.data.note.models.Note" />
+            type="id.muhariananda.notemarks.data.entities.Note" />
     </data>
 
     <androidx.cardview.widget.CardView

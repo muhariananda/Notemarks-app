@@ -1,7 +1,6 @@
-package id.muhariananda.notemarks.data
+package id.muhariananda.notemarks.data.todo
 
-import id.muhariananda.notemarks.data.todo.TodoDao
-import id.muhariananda.notemarks.data.todo.models.Todo
+import id.muhariananda.notemarks.data.entities.Todo
 import kotlinx.coroutines.flow.Flow
 
 class ToDoRepository(private val todoDao: TodoDao) {

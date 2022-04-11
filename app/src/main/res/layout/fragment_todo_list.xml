@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="mTodoSharedViewModel"
-            type="id.muhariananda.notemarks.ui.todo.TodoSharedViewModel" />
+            name="sharedViewModel"
+            type="id.muhariananda.notemarks.ui.viewmodels.SharedViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -93,7 +93,7 @@
             android:id="@+id/imageView2"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:checkTodosEmpty="@{mTodoSharedViewModel.emptyTodos}"
+            android:checkTodosEmpty="@{sharedViewModel.emptyTodo}"
             android:src="@drawable/ic_empty"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:checkTodosEmpty="@{mTodoSharedViewModel.emptyTodos}"
+            android:checkTodosEmpty="@{sharedViewModel.emptyTodo}"
             android:text="Nothing To Do"
             android:textColor="@color/hint"
             app:layout_constraintEnd_toEndOf="@+id/imageView2"

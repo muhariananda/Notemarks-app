@@ -7,7 +7,7 @@
 
         <variable
             name="mSharedViewModel"
-            type="id.muhariananda.notemarks.ui.note.NoteSharedViewModel" />
+            type="id.muhariananda.notemarks.ui.viewmodels.SharedViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

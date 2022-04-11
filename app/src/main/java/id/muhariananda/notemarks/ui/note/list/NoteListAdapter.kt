@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import id.muhariananda.notemarks.data.note.models.Note
+import id.muhariananda.notemarks.data.entities.Note
 import id.muhariananda.notemarks.databinding.ItemRowNoteBinding
 
 class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.MyViewHolder>() {

@@ -5,15 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import id.muhariananda.notemarks.R
-import id.muhariananda.notemarks.data.todo.models.Todo
+import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.databinding.FragmentTodoAddBinding
-import id.muhariananda.notemarks.ui.todo.TodoSharedViewModel
-import id.muhariananda.notemarks.ui.todo.TodoViewModel
+import id.muhariananda.notemarks.ui.viewmodels.TodoViewModel
 
 
 class TodoAddFragment : BottomSheetDialogFragment() {

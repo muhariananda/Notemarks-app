@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import id.muhariananda.notemarks.R
-import id.muhariananda.notemarks.data.todo.models.Todo
+import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.ui.todo.list.TodoListFragmentDirections
 
 
