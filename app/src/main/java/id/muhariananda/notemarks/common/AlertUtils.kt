@@ -1,8 +1,10 @@
 package id.muhariananda.notemarks.common
 
 import android.content.Context
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.snackbar.Snackbar
 import id.muhariananda.notemarks.R
 
 class AlertUtils {
@@ -21,6 +23,18 @@ class AlertUtils {
 
         fun makeToast(context: Context, message: String) {
             Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        }
+
+        fun View.makeUndoSnackBar(context: Context, title: String, action: () -> Unit) {
+            Snackbar.make(
+                this,
+                context.getString(R.string.text_delete_item, title),
+                Snackbar.LENGTH_LONG
+            )
+                .setAction(context.getString(R.string.text_undo)) {
+                    action.invoke()
+                }
+                .show()
         }
     }
 }

@@ -4,21 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import id.muhariananda.notemarks.data.entities.Todo
+import dagger.hilt.android.AndroidEntryPoint
+import id.muhariananda.notemarks.R
+import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
 import id.muhariananda.notemarks.databinding.FragmentTodoUpdateBinding
 import id.muhariananda.notemarks.ui.viewmodels.TodoViewModel
 
+@AndroidEntryPoint
 class TodoUpdateFragment : BottomSheetDialogFragment() {
-
     private var _binding: FragmentTodoUpdateBinding? = null
     private val binding get() = _binding!!
 
-    private val mTodoViewModel: TodoViewModel by viewModels()
+    private val viewModel: TodoViewModel by viewModels()
 
     private val args by navArgs<TodoUpdateFragmentArgs>()
 
@@ -47,15 +48,11 @@ class TodoUpdateFragment : BottomSheetDialogFragment() {
             btnTodoUpdate.setOnClickListener {
                 val mTitle = edtTodoUpdateTitle.text.toString()
                 if (mTitle.isNotEmpty()) {
-                    val todo = Todo(
-                        args.currentTodo.id,
-                        mTitle,
-                        args.currentTodo.isDone
-                    )
-                    mTodoViewModel.updateTodo(todo)
+                    val todo = args.currentTodo.copy(title = mTitle)
+                    viewModel.updateTodo(todo)
                     findNavController().popBackStack()
                 } else {
-                    Toast.makeText(requireContext(), "Enter the task", Toast.LENGTH_LONG).show()
+                    makeToast(requireContext(), getString(R.string.text_message_retry))
                 }
             }
         }

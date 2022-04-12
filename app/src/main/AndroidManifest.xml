@@ -3,6 +3,7 @@
     package="id.muhariananda.notemarks">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"

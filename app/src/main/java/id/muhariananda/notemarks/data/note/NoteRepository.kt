@@ -2,8 +2,9 @@ package id.muhariananda.notemarks.data.note
 
 import id.muhariananda.notemarks.data.entities.Note
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class NoteRepository(
+class NoteRepository @Inject constructor(
     private val noteDao: NoteDao
 ) {
 

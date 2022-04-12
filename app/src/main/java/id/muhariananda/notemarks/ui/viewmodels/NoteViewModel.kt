@@ -1,18 +1,19 @@
 package id.muhariananda.notemarks.ui.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import id.muhariananda.notemarks.data.db.AppNotesDatabase
-import id.muhariananda.notemarks.data.note.NoteRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import id.muhariananda.notemarks.data.entities.Note
+import id.muhariananda.notemarks.data.note.NoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NoteViewModel(application: Application) : AndroidViewModel(application) {
-    private val noteDao = AppNotesDatabase.getDatabase(application).noteDao()
-    private val repository: NoteRepository = NoteRepository(noteDao)
+@HiltViewModel
+class NoteViewModel @Inject constructor(
+    private val repository: NoteRepository
+) : ViewModel() {
 
     val getAllNotes = repository.notesFlow.asLiveData()
     val sortByHighPriority = repository.sortByHighPriority.asLiveData()

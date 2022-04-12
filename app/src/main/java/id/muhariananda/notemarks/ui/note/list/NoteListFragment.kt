@@ -8,10 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.AlertUtils.Companion.makeAlertToDelete
 import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
+import id.muhariananda.notemarks.common.AlertUtils.Companion.makeUndoSnackBar
 import id.muhariananda.notemarks.common.hideKeyboard
 import id.muhariananda.notemarks.common.observeOnce
 import id.muhariananda.notemarks.common.searchItems
@@ -22,6 +23,7 @@ import id.muhariananda.notemarks.ui.viewmodels.NoteViewModel
 import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
+@AndroidEntryPoint
 class NoteListFragment : Fragment() {
     private var _binding: FragmentNoteListBinding? = null
     private val binding get() = _binding!!
@@ -48,7 +50,7 @@ class NoteListFragment : Fragment() {
         }
 
         setupMenu()
-        showNotes()
+        showAllNotes()
         setupSearchView()
 
         hideKeyboard(requireActivity())
@@ -63,9 +65,9 @@ class NoteListFragment : Fragment() {
         binding.toolbarNoteList.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_delete_all_note -> {
-                    makeAlertToDelete(requireContext(), getString(R.string.text_delete_notes)) {
+                    makeAlertToDelete(requireContext(), getString(R.string.text_delete_all)) {
                         viewModel.deleteAllNotes()
-                        makeToast(requireContext(), getString(R.string.text_delete_notes))
+                        makeToast(requireContext(), getString(R.string.text_delete_all))
                     }
                     true
                 }
@@ -86,7 +88,7 @@ class NoteListFragment : Fragment() {
         }
     }
 
-    private fun showNotes() {
+    private fun showAllNotes() {
         binding.apply {
             rvListNote.adapter = adapter
             rvListNote.itemAnimator = SlideInUpAnimator().apply {
@@ -111,15 +113,12 @@ class NoteListFragment : Fragment() {
     }
 
     private fun restoreDeleteNote(view: View, deletedNote: Note) {
-        Snackbar.make(
-            view,
-            getString(R.string.text_delete_item, deletedNote.title),
-            Snackbar.LENGTH_LONG
-        )
-            .setAction(getString(R.string.text_undo)) {
-                viewModel.insertData(deletedNote)
-            }
-            .show()
+        view.makeUndoSnackBar(
+            requireContext(),
+            deletedNote.title
+        ) {
+            viewModel.insertData(deletedNote)
+        }
     }
 
     private fun setupSearchView() {

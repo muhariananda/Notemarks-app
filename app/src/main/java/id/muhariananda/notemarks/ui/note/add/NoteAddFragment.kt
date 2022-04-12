@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
 import id.muhariananda.notemarks.common.DateUtils
@@ -16,6 +17,7 @@ import id.muhariananda.notemarks.databinding.FragmentNoteAddBinding
 import id.muhariananda.notemarks.ui.viewmodels.NoteViewModel
 import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 
+@AndroidEntryPoint
 class NoteAddFragment : Fragment() {
     private var _binding: FragmentNoteAddBinding? = null
     private val binding get() = _binding!!

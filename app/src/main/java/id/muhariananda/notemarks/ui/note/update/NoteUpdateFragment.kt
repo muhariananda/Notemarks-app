@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import dagger.hilt.android.AndroidEntryPoint
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.AlertUtils.Companion.makeAlertToDelete
 import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
@@ -17,6 +18,7 @@ import id.muhariananda.notemarks.databinding.FragmentNoteUpdateBinding
 import id.muhariananda.notemarks.ui.viewmodels.NoteViewModel
 import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 
+@AndroidEntryPoint
 class NoteUpdateFragment : Fragment() {
     private var _binding: FragmentNoteUpdateBinding? = null
     private val binding get() = _binding!!
@@ -98,6 +100,7 @@ class NoteUpdateFragment : Fragment() {
                     priority = sharedViewModel.priority.value!!
                 )
                 noteViewModel.updateNote(note)
+                findNavController().popBackStack()
                 makeToast(requireContext(), getString(R.string.text_success_updated))
             } else {
                 makeToast(requireContext(), getString(R.string.text_message_retry))

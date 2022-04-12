@@ -9,17 +9,21 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
+import id.muhariananda.notemarks.R
+import id.muhariananda.notemarks.common.AlertUtils
+import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
 import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.databinding.FragmentTodoAddBinding
 import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 import id.muhariananda.notemarks.ui.viewmodels.TodoViewModel
 
+@AndroidEntryPoint
 class TodoAddFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentTodoAddBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: TodoViewModel by viewModels()
-    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,9 +54,9 @@ class TodoAddFragment : BottomSheetDialogFragment() {
                     )
                     viewModel.insertTodo(todo)
                     findNavController().popBackStack()
+                    makeToast(requireContext(), getString(R.string.text_success_added))
                 } else {
-                    Toast.makeText(requireContext(), "Please enter the task", Toast.LENGTH_LONG)
-                        .show()
+                    makeToast(requireContext(), getString(R.string.text_message_retry))
                 }
             }
         }

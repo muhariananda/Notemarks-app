@@ -1,21 +1,20 @@
 package id.muhariananda.notemarks.ui.todo.list
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import id.muhariananda.notemarks.R
-import id.muhariananda.notemarks.common.SwipeToDelete
+import id.muhariananda.notemarks.common.AlertUtils.Companion.makeAlertToDelete
+import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
+import id.muhariananda.notemarks.common.AlertUtils.Companion.makeUndoSnackBar
 import id.muhariananda.notemarks.common.observeOnce
+import id.muhariananda.notemarks.common.searchItems
 import id.muhariananda.notemarks.common.swipeToDeleteItem
 import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.databinding.FragmentTodoListBinding
@@ -23,6 +22,7 @@ import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 import id.muhariananda.notemarks.ui.viewmodels.TodoViewModel
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
+@AndroidEntryPoint
 class TodoListFragment : Fragment() {
     private var _binding: FragmentTodoListBinding? = null
     private val binding get() = _binding!!
@@ -43,12 +43,14 @@ class TodoListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.sharedViewModel = sharedViewModel
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = sharedViewModel
+        }
 
-        setupRecyclerView()
         setupMenu()
         setupSearchView()
+        showAllTasks()
     }
 
     override fun onDestroy() {
@@ -58,9 +60,9 @@ class TodoListFragment : Fragment() {
 
     private fun setupMenu() {
         binding.toolbarTodo.setOnMenuItemClickListener { item ->
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.action_removal_todo -> {
-                    confirmRemoval()
+                    confirmToRemoveAllTasks()
                     true
                 }
                 else -> onOptionsItemSelected(item)
@@ -68,17 +70,33 @@ class TodoListFragment : Fragment() {
         }
     }
 
-    private fun setupRecyclerView() {
+    private fun setupSearchView() {
+        binding.svTodo.searchItems { newText ->
+            searchTasks(newText)
+        }
+    }
+
+    private fun searchTasks(query: String) {
+        val searchQuery = "%$query%"
+        viewModel.searchTodo(searchQuery).observeOnce(viewLifecycleOwner) { list ->
+            list?.let {
+                adapter.submitList(it)
+            }
+        }
+    }
+
+    private fun showAllTasks() {
         adapter = TodoListAdapter { todo, isChecked ->
             val updateTodo = todo.copy(isDone = isChecked)
             viewModel.updateTodo(updateTodo)
+            viewModel.todos.observe(viewLifecycleOwner) {
+                adapter.submitList(it)
+            }
         }
 
         binding.apply {
             rvTodo.adapter = adapter
-            rvTodo.itemAnimator = SlideInUpAnimator().apply {
-                addDuration = 300
-            }
+            rvTodo.layoutManager = LinearLayoutManager(requireContext())
             swipeToDelete(rvTodo)
         }
 
@@ -98,55 +116,21 @@ class TodoListFragment : Fragment() {
     }
 
     private fun restoreDeleteTodo(view: View, deleteItem: Todo) {
-        val snackBar = Snackbar.make(
-            view,
-            "Delete ${deleteItem.title}",
-            Snackbar.LENGTH_LONG
-        )
-        snackBar.apply {
-            setAction("Undo") {
-                viewModel.insertTodo(deleteItem)
-            }
-        }.show()
+        view.makeUndoSnackBar(
+            requireContext(),
+            deleteItem.title
+        ) {
+            viewModel.insertTodo(deleteItem)
+        }
     }
 
-    private fun confirmRemoval() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.apply {
-            setNegativeButton("No") { _, _ -> }
-            setPositiveButton("Yes") { _, _ ->
-                viewModel.deleteAllTodos()
-                Toast.makeText(
-                    requireContext(),
-                    "Successfully to remove all todos",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            setTitle("Delete All Todos")
-            setMessage("Are you sure want to delete all?")
-        }.show()
-    }
-
-    private fun setupSearchView() {
-        binding.svTodo.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { searchTodo(it) }
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let { searchTodo(it) }
-                return true
-            }
-        })
-    }
-
-    private fun searchTodo(query: String) {
-        val searchQuery = "%$query%"
-        viewModel.searchTodo(searchQuery).observeOnce(viewLifecycleOwner) { list ->
-            list?.let {
-                adapter.submitList(it)
-            }
+    private fun confirmToRemoveAllTasks() {
+        makeAlertToDelete(
+            requireContext(),
+            getString(R.string.text_delete_all)
+        ) {
+            viewModel.deleteAllTodos()
+            makeToast(requireContext(), getString(R.string.text_deleted_todos))
         }
     }
 }

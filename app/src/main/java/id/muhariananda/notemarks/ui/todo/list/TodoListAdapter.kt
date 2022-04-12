@@ -28,9 +28,9 @@ class TodoListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val current = getItem(position)
+        val item = getItem(position)
         holder.apply {
-            bind(current)
+            bind(item)
             binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
                 val currentTodo = currentList[adapterPosition]
                 onItemChecked.invoke(currentTodo, isChecked)

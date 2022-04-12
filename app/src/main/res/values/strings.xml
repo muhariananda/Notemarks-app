@@ -26,8 +26,9 @@
     <string name="text_to_do">To Do</string>
     <string name="text_delete_all_todos">Delete All Todos</string>
 
-    <string name="text_delete_notes">Delete all notes</string>
+    <string name="text_delete_all">Delete all</string>
     <string name="text_deleted_notes">All notes have been deleted</string>
+    <string name="text_deleted_todos">All tasks have been deleted</string>
     <string name="text_delete_item">Delete %s</string>
     <string name="text_deleted_item">Successfully to remove %s</string>
 

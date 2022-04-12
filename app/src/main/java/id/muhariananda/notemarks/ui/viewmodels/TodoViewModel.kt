@@ -1,18 +1,19 @@
 package id.muhariananda.notemarks.ui.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import id.muhariananda.notemarks.data.todo.ToDoRepository
-import id.muhariananda.notemarks.data.db.AppNotesDatabase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import id.muhariananda.notemarks.data.entities.Todo
+import id.muhariananda.notemarks.data.todo.ToDoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TodoViewModel(application: Application) : AndroidViewModel(application) {
-    private val todoDao = AppNotesDatabase.getDatabase(application).toDoDao()
-    private val repository = ToDoRepository(todoDao)
+@HiltViewModel
+class TodoViewModel @Inject constructor(
+    private val repository: ToDoRepository
+) : ViewModel() {
 
     val todos = repository.todosFlow.asLiveData()
 

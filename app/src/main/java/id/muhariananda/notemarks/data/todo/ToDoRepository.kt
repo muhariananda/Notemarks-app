@@ -2,8 +2,11 @@ package id.muhariananda.notemarks.data.todo
 
 import id.muhariananda.notemarks.data.entities.Todo
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class ToDoRepository(private val todoDao: TodoDao) {
+class ToDoRepository @Inject constructor(
+    private val todoDao: TodoDao
+) {
 
     val todosFlow: Flow<List<Todo>>
         get() = todoDao.getTodos()
