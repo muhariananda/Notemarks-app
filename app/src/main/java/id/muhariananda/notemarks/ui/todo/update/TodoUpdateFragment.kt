@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -12,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
 import id.muhariananda.notemarks.databinding.FragmentTodoUpdateBinding
+import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 import id.muhariananda.notemarks.ui.viewmodels.TodoViewModel
 
 @AndroidEntryPoint
@@ -20,6 +22,7 @@ class TodoUpdateFragment : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
 
     private val viewModel: TodoViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private val args by navArgs<TodoUpdateFragmentArgs>()
 
@@ -33,9 +36,14 @@ class TodoUpdateFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.todo = args.currentTodo
 
-        updateTodo()
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = sharedViewModel
+            todo = args.currentTodo
+        }
+
+        //updateTodo()
     }
 
     override fun onDestroy() {
@@ -43,19 +51,19 @@ class TodoUpdateFragment : BottomSheetDialogFragment() {
         _binding = null
     }
 
-    private fun updateTodo() {
-        binding.apply {
-            btnTodoUpdate.setOnClickListener {
-                val mTitle = edtTodoUpdateTitle.text.toString()
-                if (mTitle.isNotEmpty()) {
-                    val todo = args.currentTodo.copy(title = mTitle)
-                    viewModel.updateTodo(todo)
-                    findNavController().popBackStack()
-                } else {
-                    makeToast(requireContext(), getString(R.string.text_message_retry))
-                }
-            }
-        }
-    }
+//    private fun updateTodo() {
+//        binding.apply {
+//            btnTodoUpdate.setOnClickListener {
+//                val mTitle = edtTodoUpdateTitle.text.toString()
+//                if (mTitle.isNotEmpty()) {
+//                    val todo = args.currentTodo.copy(title = mTitle)
+//                    viewModel.updateTodo(todo)
+//                    findNavController().popBackStack()
+//                } else {
+//                    makeToast(requireContext(), getString(R.string.text_message_retry))
+//                }
+//            }
+//        }
+//    }
 
 }

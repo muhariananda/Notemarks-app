@@ -24,6 +24,7 @@ class TodoAddFragment : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
 
     private val viewModel: TodoViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +36,12 @@ class TodoAddFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        insertTodo()
+
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = sharedViewModel
+        }
+        //insertTodo()
     }
 
     override fun onDestroy() {
@@ -43,23 +49,23 @@ class TodoAddFragment : BottomSheetDialogFragment() {
         _binding = null
     }
 
-    private fun insertTodo() {
-        binding.apply {
-            btnTodoAdd.setOnClickListener {
-                val mTitle = edtTodoAddTitle.text.toString()
-                if (mTitle.isNotEmpty()) {
-                    val todo = Todo(
-                        0,
-                        mTitle
-                    )
-                    viewModel.insertTodo(todo)
-                    findNavController().popBackStack()
-                    makeToast(requireContext(), getString(R.string.text_success_added))
-                } else {
-                    makeToast(requireContext(), getString(R.string.text_message_retry))
-                }
-            }
-        }
-    }
+//    private fun insertTodo() {
+//        binding.apply {
+//            btnTodoAdd.setOnClickListener {
+//                val mTitle = edtTodoAddTitle.text.toString()
+//                if (mTitle.isNotEmpty()) {
+//                    val todo = Todo(
+//                        0,
+//                        mTitle
+//                    )
+//                    viewModel.insertTodo(todo)
+//                    findNavController().popBackStack()
+//                    makeToast(requireContext(), getString(R.string.text_success_added))
+//                } else {
+//                    makeToast(requireContext(), getString(R.string.text_message_retry))
+//                }
+//            }
+//        }
+//    }
 
 }

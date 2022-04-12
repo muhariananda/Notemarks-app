@@ -39,4 +39,8 @@
     <string name="text_yes">Yes</string>
     <string name="text_no">No</string>
     <string name="text_undo">Undo</string>
+    <string name="text_hint_time_reminder">Time reminder</string>
+    <string name="text_hint_date_reminder">Date reminder</string>
+    <string name="text_btn_save_reminder">Save Reminder</string>
+    <string name="text_hint_task">Task</string>
 </resources>
