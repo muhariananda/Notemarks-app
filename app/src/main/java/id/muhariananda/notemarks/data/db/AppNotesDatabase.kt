@@ -5,8 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import id.muhariananda.notemarks.common.Constant.DB_NAME
-import id.muhariananda.notemarks.common.DatabaseConverter
+import id.muhariananda.notemarks.common.Constant.DATABASE_NAME
 import id.muhariananda.notemarks.data.entities.Note
 import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.data.note.NoteDao
@@ -31,7 +30,7 @@ abstract class AppNotesDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppNotesDatabase::class.java,
-                    DB_NAME
+                    DATABASE_NAME
                 )
                     .fallbackToDestructiveMigration()
                     .build()

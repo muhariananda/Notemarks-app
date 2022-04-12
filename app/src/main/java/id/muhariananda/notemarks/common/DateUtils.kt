@@ -3,7 +3,7 @@ package id.muhariananda.notemarks.common
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DateHelper {
+class DateUtils {
 
     companion object {
         fun getCurrentDate(): String {

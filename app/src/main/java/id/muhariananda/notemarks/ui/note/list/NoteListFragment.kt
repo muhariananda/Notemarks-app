@@ -4,18 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import id.muhariananda.notemarks.R
-import id.muhariananda.notemarks.common.SwipeToDelete
+import id.muhariananda.notemarks.common.AlertUtils.Companion.makeAlertToDelete
+import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
 import id.muhariananda.notemarks.common.hideKeyboard
 import id.muhariananda.notemarks.common.observeOnce
+import id.muhariananda.notemarks.common.searchItems
+import id.muhariananda.notemarks.common.swipeToDeleteItem
 import id.muhariananda.notemarks.data.entities.Note
 import id.muhariananda.notemarks.databinding.FragmentNoteListBinding
 import id.muhariananda.notemarks.ui.viewmodels.NoteViewModel
@@ -26,8 +26,8 @@ class NoteListFragment : Fragment() {
     private var _binding: FragmentNoteListBinding? = null
     private val binding get() = _binding!!
 
-    private val mNoteViewModel: NoteViewModel by viewModels()
-    private val mSharedViewModel: SharedViewModel by viewModels()
+    private val viewModel: NoteViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private val adapter: NoteListAdapter by lazy { NoteListAdapter() }
 
@@ -42,11 +42,13 @@ class NoteListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this
-        binding.mSharedViewModel = mSharedViewModel
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = sharedViewModel
+        }
 
         setupMenu()
-        setupRecyclerView()
+        showNotes()
         setupSearchView()
 
         hideKeyboard(requireActivity())
@@ -61,17 +63,20 @@ class NoteListFragment : Fragment() {
         binding.toolbarNoteList.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_delete_all_note -> {
-                    confirmRemoval()
+                    makeAlertToDelete(requireContext(), getString(R.string.text_delete_notes)) {
+                        viewModel.deleteAllNotes()
+                        makeToast(requireContext(), getString(R.string.text_delete_notes))
+                    }
                     true
                 }
                 R.id.action_high_priority -> {
-                    mNoteViewModel.sortByHighPriority.observe(viewLifecycleOwner) {
+                    viewModel.sortByHighPriority.observe(viewLifecycleOwner) {
                         adapter.submitList(it)
                     }
                     true
                 }
                 R.id.action_low_priority -> {
-                    mNoteViewModel.sortByLowPriority.observe(viewLifecycleOwner) {
+                    viewModel.sortByLowPriority.observe(viewLifecycleOwner) {
                         adapter.submitList(it)
                     }
                     true
@@ -81,32 +86,7 @@ class NoteListFragment : Fragment() {
         }
     }
 
-    private fun setupSearchView() {
-        binding.svListNote.setOnQueryTextListener(
-            object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    query?.let { searchNote(it) }
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    newText?.let { searchNote(it) }
-                    return true
-                }
-            }
-        )
-    }
-
-    private fun searchNote(query: String) {
-        val searchQuery = "%$query%"
-        mNoteViewModel.searchNote(searchQuery).observeOnce(viewLifecycleOwner) { list ->
-            list?.let {
-                adapter.submitList(it)
-            }
-        }
-    }
-
-    private fun setupRecyclerView() {
+    private fun showNotes() {
         binding.apply {
             rvListNote.adapter = adapter
             rvListNote.itemAnimator = SlideInUpAnimator().apply {
@@ -115,51 +95,45 @@ class NoteListFragment : Fragment() {
             swipeToDelete(rvListNote)
         }
 
-        mNoteViewModel.getAllNotes.observe(viewLifecycleOwner) { notes ->
-            mSharedViewModel.checkNotesIfEmpty(notes)
+        viewModel.getAllNotes.observe(viewLifecycleOwner) { notes ->
+            sharedViewModel.checkNotesIfEmpty(notes)
             adapter.submitList(notes)
         }
     }
 
     private fun swipeToDelete(recyclerView: RecyclerView) {
-        val swipeToDeleteCallback = object : SwipeToDelete() {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val itemToDelete = adapter.currentList[viewHolder.adapterPosition]
-                mNoteViewModel.deleteNote(itemToDelete)
-                adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                restoreDeleteNote(viewHolder.itemView, itemToDelete)
-            }
+        recyclerView.swipeToDeleteItem { viewHolder ->
+            val itemToDelete = adapter.currentList[viewHolder.adapterPosition]
+            viewModel.deleteNote(itemToDelete)
+            adapter.notifyItemRemoved(viewHolder.adapterPosition)
+            restoreDeleteNote(viewHolder.itemView, itemToDelete)
         }
-        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     private fun restoreDeleteNote(view: View, deletedNote: Note) {
-        val snackBar = Snackbar.make(
+        Snackbar.make(
             view,
-            "Deleted ${deletedNote.title}",
+            getString(R.string.text_delete_item, deletedNote.title),
             Snackbar.LENGTH_LONG
         )
-        snackBar.setAction("Undo") {
-            mNoteViewModel.insertData(deletedNote)
-        }
-        snackBar.show()
+            .setAction(getString(R.string.text_undo)) {
+                viewModel.insertData(deletedNote)
+            }
+            .show()
     }
 
-    private fun confirmRemoval() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.apply {
-            setNegativeButton("No") { _, _ -> }
-            setPositiveButton("Yes") { _, _ ->
-                mNoteViewModel.deleteAllNotes()
-                Toast.makeText(
-                    requireContext(),
-                    "Successfully to remove all",
-                    Toast.LENGTH_LONG
-                ).show()
+    private fun setupSearchView() {
+        binding.svListNote.searchItems {
+            searchNote(it)
+        }
+    }
+
+    private fun searchNote(query: String) {
+        val searchQuery = "%$query%"
+        viewModel.searchNote(searchQuery).observeOnce(viewLifecycleOwner) { list ->
+            list?.let {
+                adapter.submitList(it)
             }
-            setTitle("Delete Notes")
-            setMessage("Are you sure want to delete?")
-        }.show()
+        }
     }
 }

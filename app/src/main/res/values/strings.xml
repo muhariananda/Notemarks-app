@@ -25,4 +25,17 @@
     <string name="text_todo_done">Done</string>
     <string name="text_to_do">To Do</string>
     <string name="text_delete_all_todos">Delete All Todos</string>
+
+    <string name="text_delete_notes">Delete all notes</string>
+    <string name="text_deleted_notes">All notes have been deleted</string>
+    <string name="text_delete_item">Delete %s</string>
+    <string name="text_deleted_item">Successfully to remove %s</string>
+
+    <string name="text_success_added">Successfully added</string>
+    <string name="text_success_updated">Successfully updated</string>
+    <string name="text_message_retry">Field cannot be empty</string>
+    <string name="text_message_delete">Are you sure want to delete?</string>
+    <string name="text_yes">Yes</string>
+    <string name="text_no">No</string>
+    <string name="text_undo">Undo</string>
 </resources>

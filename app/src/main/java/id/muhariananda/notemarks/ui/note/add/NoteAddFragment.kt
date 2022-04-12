@@ -4,20 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import id.muhariananda.notemarks.R
-import id.muhariananda.notemarks.common.DateHelper
+import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
+import id.muhariananda.notemarks.common.DateUtils
 import id.muhariananda.notemarks.data.entities.Note
 import id.muhariananda.notemarks.databinding.FragmentNoteAddBinding
-import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 import id.muhariananda.notemarks.ui.viewmodels.NoteViewModel
+import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 
 class NoteAddFragment : Fragment() {
-
     private var _binding: FragmentNoteAddBinding? = null
     private val binding get() = _binding!!
 
@@ -78,14 +77,14 @@ class NoteAddFragment : Fragment() {
                     0,
                     mTitle,
                     mContent,
-                    DateHelper.getCurrentDate(),
+                    DateUtils.getCurrentDate(),
                     sharedViewModel.priority.value!!
                 )
                 noteViewModel.insertData(note)
                 findNavController().popBackStack()
-                Toast.makeText(requireContext(), "Successfully add", Toast.LENGTH_LONG).show()
+                makeToast(requireContext(), getString(R.string.text_success_added))
             } else {
-                Toast.makeText(requireContext(), "Please add the field", Toast.LENGTH_LONG).show()
+                makeToast(requireContext(), getString(R.string.text_message_retry))
             }
         }
     }

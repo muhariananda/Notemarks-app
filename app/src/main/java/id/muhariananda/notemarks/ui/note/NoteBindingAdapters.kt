@@ -4,7 +4,7 @@ import android.view.View
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.data.entities.Note
@@ -37,7 +37,7 @@ class BindingAdapters {
 
         @BindingAdapter("android:emptyNotes")
         @JvmStatic
-        fun View.emptyNotes(emptyNotes: MutableLiveData<Boolean>) {
+        fun View.emptyNotes(emptyNotes: LiveData<Boolean>) {
             when (emptyNotes.value) {
                 true -> this.visibility = View.VISIBLE
                 else -> this.visibility = View.INVISIBLE

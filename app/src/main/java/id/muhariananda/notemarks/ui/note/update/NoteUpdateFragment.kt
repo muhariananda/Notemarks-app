@@ -4,28 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import id.muhariananda.notemarks.R
+import id.muhariananda.notemarks.common.AlertUtils.Companion.makeAlertToDelete
+import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
 import id.muhariananda.notemarks.data.entities.Priority
 import id.muhariananda.notemarks.databinding.FragmentNoteUpdateBinding
-import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 import id.muhariananda.notemarks.ui.viewmodels.NoteViewModel
+import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 
 class NoteUpdateFragment : Fragment() {
-
     private var _binding: FragmentNoteUpdateBinding? = null
     private val binding get() = _binding!!
 
-    private val args by navArgs<NoteUpdateFragmentArgs>()
-
     private val noteViewModel: NoteViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
+
+    private val args by navArgs<NoteUpdateFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -99,30 +98,22 @@ class NoteUpdateFragment : Fragment() {
                     priority = sharedViewModel.priority.value!!
                 )
                 noteViewModel.updateNote(note)
-                Toast.makeText(requireContext(), "Update Successfully", Toast.LENGTH_LONG).show()
-                findNavController().popBackStack()
+                makeToast(requireContext(), getString(R.string.text_success_updated))
             } else {
-                Toast.makeText(requireContext(), "Please fill out fields", Toast.LENGTH_LONG).show()
+                makeToast(requireContext(), getString(R.string.text_message_retry))
             }
         }
     }
 
     private fun deleteNote() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.apply {
-            setNegativeButton("No") { _, _ -> }
-            setPositiveButton("Yes") { _, _ ->
-                noteViewModel.deleteNote(args.currentNote)
-                Toast.makeText(
-                    requireContext(),
-                    "Successfully to remove ${args.currentNote.title}",
-                    Toast.LENGTH_LONG
-                ).show()
-                findNavController().popBackStack()
-            }
-            setTitle("Delete ${args.currentNote.title}")
-            setMessage("Are you sure want to delete ${args.currentNote.title}?")
-        }.show()
+        val title = args.currentNote.title
+        makeAlertToDelete(
+            requireContext(),
+            getString(R.string.text_delete_item, title),
+        ) {
+            noteViewModel.deleteNote(args.currentNote)
+            makeToast(requireContext(), getString(R.string.text_deleted_item, title))
+            findNavController().popBackStack()
+        }
     }
-
 }

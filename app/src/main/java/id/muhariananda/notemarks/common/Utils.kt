@@ -3,9 +3,12 @@ package id.muhariananda.notemarks.common
 import android.app.Activity
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 
 fun hideKeyboard(activity: Activity) {
     val inputMethodManager =
@@ -21,9 +24,30 @@ fun hideKeyboard(activity: Activity) {
 }
 
 fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
-    observe(lifecycleOwner, object : Observer<T> {
-        override fun onChanged(t: T) {
-            observer.onChanged(t)
+    observe(lifecycleOwner) { t -> observer.onChanged(t) }
+}
+
+fun RecyclerView.swipeToDeleteItem(
+    onSwipe: (RecyclerView.ViewHolder) -> Unit
+) {
+    val swipeToDeleteCallBack = object : SwipeToDelete() {
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            onSwipe.invoke(viewHolder)
+        }
+    }
+    val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallBack)
+    itemTouchHelper.attachToRecyclerView(this)
+}
+
+fun SearchView.searchItems(onQueryTextChange: (String) -> Unit) {
+    setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            return true
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            newText?.let { onQueryTextChange.invoke(newText) }
+            return true
         }
     })
 }

@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="mSharedViewModel"
+            name="viewModel"
             type="id.muhariananda.notemarks.ui.viewmodels.SharedViewModel" />
     </data>
 
@@ -81,7 +81,7 @@
             android:id="@+id/imageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:emptyNotes="@{mSharedViewModel.emptyNotes}"
+            android:emptyNotes="@{viewModel.emptyNotes}"
             android:src="@drawable/ic_empty"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:emptyNotes="@{mSharedViewModel.emptyNotes}"
+            android:emptyNotes="@{viewModel.emptyNotes}"
             android:text="@string/text_no_notes"
             android:textColor="@color/hint"
             android:textSize="14sp"

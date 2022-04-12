@@ -1,10 +1,11 @@
-package id.muhariananda.notemarks
+package id.muhariananda.notemarks.ui
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

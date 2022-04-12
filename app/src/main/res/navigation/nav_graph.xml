@@ -11,19 +11,19 @@
         android:label="fragment_note_list"
         tools:layout="@layout/fragment_note_list" >
         <action
-            android:id="@+id/action_noteListFragment_to_noteAddFragment"
-            app:destination="@id/noteAddFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right" />
-        <action
             android:id="@+id/action_noteListFragment_to_noteUpdateFragment"
             app:destination="@id/noteUpdateFragment"
             app:enterAnim="@anim/from_left"
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_noteListFragment_to_noteAddFragment"
+            app:destination="@id/noteAddFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/noteAddFragment"

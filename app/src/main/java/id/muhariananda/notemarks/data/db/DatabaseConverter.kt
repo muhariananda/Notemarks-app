@@ -1,4 +1,4 @@
-package id.muhariananda.notemarks.common
+package id.muhariananda.notemarks.data.db
 
 import androidx.room.TypeConverter
 import id.muhariananda.notemarks.data.entities.Priority

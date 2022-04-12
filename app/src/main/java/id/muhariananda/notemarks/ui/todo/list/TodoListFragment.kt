@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.SwipeToDelete
 import id.muhariananda.notemarks.common.observeOnce
+import id.muhariananda.notemarks.common.swipeToDeleteItem
 import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.databinding.FragmentTodoListBinding
 import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
@@ -23,7 +24,6 @@ import id.muhariananda.notemarks.ui.viewmodels.TodoViewModel
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 class TodoListFragment : Fragment() {
-
     private var _binding: FragmentTodoListBinding? = null
     private val binding get() = _binding!!
 
@@ -89,16 +89,12 @@ class TodoListFragment : Fragment() {
     }
 
     private fun swipeToDelete(recyclerView: RecyclerView) {
-        val swipeToDeleteCallback = object : SwipeToDelete() {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val itemToDelete = adapter.currentList[viewHolder.adapterPosition]
-                viewModel.deleteTodo(itemToDelete)
-                adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                restoreDeleteTodo(viewHolder.itemView, itemToDelete)
-            }
+        recyclerView.swipeToDeleteItem { viewHolder ->
+            val itemToDelete = adapter.currentList[viewHolder.adapterPosition]
+            viewModel.deleteTodo(itemToDelete)
+            adapter.notifyItemRemoved(viewHolder.adapterPosition)
+            restoreDeleteTodo(viewHolder.itemView, itemToDelete)
         }
-        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     private fun restoreDeleteTodo(view: View, deleteItem: Todo) {

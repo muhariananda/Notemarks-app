@@ -6,6 +6,7 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -40,7 +41,7 @@ class TodoBindingAdapters {
 
         @BindingAdapter("android:checkTodosEmpty")
         @JvmStatic
-        fun View.checkTodosEmpty(emptyTodos: MutableLiveData<Boolean>) {
+        fun View.checkTodosEmpty(emptyTodos: LiveData<Boolean>) {
             when (emptyTodos.value) {
                 true -> this.visibility = View.VISIBLE
                 else -> this.visibility = View.INVISIBLE
