@@ -36,9 +36,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
                     android:paddingStart="16dp"
                     android:text="@string/text_to_do"
-                    android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/primary"
                     android:textSize="21sp" />
 
@@ -68,6 +68,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

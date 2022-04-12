@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.SwipeToDelete
@@ -19,8 +18,8 @@ import id.muhariananda.notemarks.common.hideKeyboard
 import id.muhariananda.notemarks.common.observeOnce
 import id.muhariananda.notemarks.data.entities.Note
 import id.muhariananda.notemarks.databinding.FragmentNoteListBinding
-import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 import id.muhariananda.notemarks.ui.viewmodels.NoteViewModel
+import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 class NoteListFragment : Fragment() {
@@ -50,7 +49,6 @@ class NoteListFragment : Fragment() {
         setupRecyclerView()
         setupSearchView()
 
-        //for hide keyboard view
         hideKeyboard(requireActivity())
     }
 
@@ -67,15 +65,15 @@ class NoteListFragment : Fragment() {
                     true
                 }
                 R.id.action_high_priority -> {
-                    mNoteViewModel.sortByHighPriority.observe(viewLifecycleOwner, {
-                        adapter.saveNotes(it)
-                    })
+                    mNoteViewModel.sortByHighPriority.observe(viewLifecycleOwner) {
+                        adapter.submitList(it)
+                    }
                     true
                 }
                 R.id.action_low_priority -> {
-                    mNoteViewModel.sortByLowPriority.observe(viewLifecycleOwner, {
-                        adapter.saveNotes(it)
-                    })
+                    mNoteViewModel.sortByLowPriority.observe(viewLifecycleOwner) {
+                        adapter.submitList(it)
+                    }
                     true
                 }
                 else -> super.onContextItemSelected(item)
@@ -101,36 +99,32 @@ class NoteListFragment : Fragment() {
 
     private fun searchNote(query: String) {
         val searchQuery = "%$query%"
-        mNoteViewModel.searchNote(searchQuery).observeOnce(viewLifecycleOwner, { list ->
+        mNoteViewModel.searchNote(searchQuery).observeOnce(viewLifecycleOwner) { list ->
             list?.let {
-                adapter.saveNotes(it)
+                adapter.submitList(it)
             }
-        })
+        }
     }
 
     private fun setupRecyclerView() {
         binding.apply {
             rvListNote.adapter = adapter
-            rvListNote.layoutManager = StaggeredGridLayoutManager(
-                2, StaggeredGridLayoutManager.VERTICAL
-            )
             rvListNote.itemAnimator = SlideInUpAnimator().apply {
                 addDuration = 300
             }
-
             swipeToDelete(rvListNote)
         }
 
-        mNoteViewModel.getAllNotes.observe(viewLifecycleOwner, { notes ->
+        mNoteViewModel.getAllNotes.observe(viewLifecycleOwner) { notes ->
             mSharedViewModel.checkNotesIfEmpty(notes)
-            adapter.saveNotes(notes)
-        })
+            adapter.submitList(notes)
+        }
     }
 
     private fun swipeToDelete(recyclerView: RecyclerView) {
         val swipeToDeleteCallback = object : SwipeToDelete() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val itemToDelete = adapter.notesList[viewHolder.adapterPosition]
+                val itemToDelete = adapter.currentList[viewHolder.adapterPosition]
                 mNoteViewModel.deleteNote(itemToDelete)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 restoreDeleteNote(viewHolder.itemView, itemToDelete)

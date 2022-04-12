@@ -30,7 +30,7 @@ class TodoListFragment : Fragment() {
     private val viewModel: TodoViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by viewModels()
 
-    private val adapter: TodoListAdapter by lazy { TodoListAdapter() }
+    private lateinit var adapter: TodoListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,9 +69,13 @@ class TodoListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
+        adapter = TodoListAdapter { todo, isChecked ->
+            val updateTodo = todo.copy(isDone = isChecked)
+            viewModel.updateTodo(updateTodo)
+        }
+
         binding.apply {
             rvTodo.adapter = adapter
-            rvTodo.layoutManager = LinearLayoutManager(requireActivity())
             rvTodo.itemAnimator = SlideInUpAnimator().apply {
                 addDuration = 300
             }
@@ -80,23 +84,14 @@ class TodoListFragment : Fragment() {
 
         viewModel.todos.observe(viewLifecycleOwner) { todos ->
             sharedViewModel.checkTodoIfEmpty(todos)
-            adapter.saveTodo(todos)
-        }
-
-        adapter.listener = { item, isChecked ->
-            val todo = Todo(
-                item.id,
-                item.title,
-                isChecked
-            )
-            viewModel.updateTodo(todo)
+            adapter.submitList(todos)
         }
     }
 
     private fun swipeToDelete(recyclerView: RecyclerView) {
         val swipeToDeleteCallback = object : SwipeToDelete() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val itemToDelete = adapter.todoList[viewHolder.adapterPosition]
+                val itemToDelete = adapter.currentList[viewHolder.adapterPosition]
                 viewModel.deleteTodo(itemToDelete)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 restoreDeleteTodo(viewHolder.itemView, itemToDelete)
@@ -154,7 +149,7 @@ class TodoListFragment : Fragment() {
         val searchQuery = "%$query%"
         viewModel.searchTodo(searchQuery).observeOnce(viewLifecycleOwner) { list ->
             list?.let {
-                adapter.saveTodo(it)
+                adapter.submitList(it)
             }
         }
     }

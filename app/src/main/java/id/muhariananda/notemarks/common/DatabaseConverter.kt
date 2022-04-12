@@ -3,7 +3,7 @@ package id.muhariananda.notemarks.common
 import androidx.room.TypeConverter
 import id.muhariananda.notemarks.data.entities.Priority
 
-class Converter {
+class DatabaseConverter {
 
     @TypeConverter
     fun fromPriority(priority: Priority): String {
