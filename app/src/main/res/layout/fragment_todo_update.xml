@@ -10,7 +10,7 @@
             type="id.muhariananda.notemarks.data.entities.Todo" />
 
         <variable
-            name="viewModel"
+            name="sharedViewModel"
             type="id.muhariananda.notemarks.ui.viewmodels.SharedViewModel" />
     </data>
 
@@ -33,28 +33,28 @@
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_low_add"
+                android:id="@+id/chip_low_update"
                 style="@style/ThemeOverlay.Notemarks.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:onClick="@{() -> viewModel.setPriority(1)}"
+                android:onClick="@{() -> sharedViewModel.setPriority(1)}"
                 android:text="@string/text_low_priority" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_medium_add"
+                android:id="@+id/chip_medium_update"
                 style="@style/ThemeOverlay.Notemarks.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.setPriority(2)}"
+                android:onClick="@{() -> sharedViewModel.setPriority(2)}"
                 android:text="@string/text_medium_priority" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_high_add"
+                android:id="@+id/chip_high_update"
                 style="@style/ThemeOverlay.Notemarks.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.setPriority(3)}"
+                android:onClick="@{() -> sharedViewModel.setPriority(3)}"
                 android:text="@string/text_high_priority" />
         </com.google.android.material.chip.ChipGroup>
 
@@ -72,9 +72,12 @@
             app:layout_constraintTop_toBottomOf="@+id/chipGroup_todo_add">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/text_hint_task" />
+                android:hint="@string/text_hint_task"
+                android:text="@{todo.title}"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -85,16 +88,19 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/edt_todo_time_reminder"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_todo_title"
             app:startIconDrawable="@drawable/ic_date">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/text_hint_date_reminder" />
+                android:hint="@string/text_hint_date_reminder"
+                android:inputType="date"
+                android:text="@{todo.date}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -102,23 +108,26 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/edt_todo_date_reminder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_todo_date_reminder"
+            app:layout_constraintStart_toEndOf="@+id/edt_todo_date_reminder"
+            app:layout_constraintTop_toTopOf="@+id/edt_todo_date_reminder"
             app:startIconDrawable="@drawable/ic_time">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/text_hint_time_reminder" />
+                android:hint="@string/text_hint_time_reminder"
+                android:inputType="time"
+                android:text="@{todo.time}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_update_todo"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"

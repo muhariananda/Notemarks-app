@@ -10,7 +10,7 @@ import id.muhariananda.notemarks.data.todo.TodoDao
 
 @Database(
     entities = [Note::class, Todo::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(DatabaseConverter::class)

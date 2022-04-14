@@ -11,10 +11,15 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import id.muhariananda.notemarks.R
-import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
+import id.muhariananda.notemarks.common.DateHelper
+import id.muhariananda.notemarks.common.makeToast
+import id.muhariananda.notemarks.data.entities.Priority
+import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.databinding.FragmentTodoUpdateBinding
+import id.muhariananda.notemarks.ui.common.DatePickerHelper
 import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 import id.muhariananda.notemarks.ui.viewmodels.TodoViewModel
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TodoUpdateFragment : BottomSheetDialogFragment() {
@@ -22,9 +27,16 @@ class TodoUpdateFragment : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
 
     private val viewModel: TodoViewModel by viewModels()
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val mSharedViewModel: SharedViewModel by activityViewModels()
 
     private val args by navArgs<TodoUpdateFragmentArgs>()
+
+    private var dateMillis = 0L
+    private var hour = 0
+    private var minute = 0
+
+    @Inject
+    lateinit var datePickerHelper: DatePickerHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,11 +51,12 @@ class TodoUpdateFragment : BottomSheetDialogFragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            viewModel = sharedViewModel
+            sharedViewModel = mSharedViewModel
             todo = args.currentTodo
         }
 
-        //updateTodo()
+        setupChip()
+        updateTodo()
     }
 
     override fun onDestroy() {
@@ -51,19 +64,68 @@ class TodoUpdateFragment : BottomSheetDialogFragment() {
         _binding = null
     }
 
-//    private fun updateTodo() {
-//        binding.apply {
-//            btnTodoUpdate.setOnClickListener {
-//                val mTitle = edtTodoUpdateTitle.text.toString()
-//                if (mTitle.isNotEmpty()) {
-//                    val todo = args.currentTodo.copy(title = mTitle)
-//                    viewModel.updateTodo(todo)
-//                    findNavController().popBackStack()
-//                } else {
-//                    makeToast(requireContext(), getString(R.string.text_message_retry))
-//                }
-//            }
-//        }
-//    }
+    private fun setupChip() {
+        binding.apply {
+            when (args.currentTodo.priority) {
+                Priority.LOW -> chipLowUpdate.isChecked = true
+                Priority.MEDIUM -> chipMediumUpdate.isChecked = true
+                Priority.HIGH -> chipHighUpdate.isChecked = true
+            }
 
+        }
+    }
+
+    private fun dateTimePicker() {
+        binding.apply {
+            txtDate.setOnClickListener {
+                datePickerHelper.makeDatePicker { millis ->
+                    dateMillis = millis
+                    txtDate.setText(DateHelper.convertMillisToDate(millis))
+                }
+            }
+
+            txtTime.setOnClickListener {
+                datePickerHelper.makeTimePicker { h, m ->
+                    hour = h
+                    minute = m
+                    txtTime.setText(
+                        getString(
+                            R.string.text_show_time,
+                            h.toString(),
+                            m.toString()
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    private fun updateTodo() {
+        binding.apply {
+            btnUpdateTodo.setOnClickListener {
+                val mTitle = txtDate.text.toString()
+                if (mTitle.isNotEmpty()) {
+                    val todo = args.currentTodo.copy(title = mTitle)
+                    viewModel.updateTodo(todo)
+                    setTaskReminder(todo, args.currentTodo)
+                    findNavController().popBackStack()
+                } else {
+                    makeToast(requireContext(), getString(R.string.text_message_retry))
+                }
+            }
+        }
+    }
+
+    private fun setTaskReminder(newTodo: Todo, oldTodo: Todo) {
+        binding.apply {
+            val selectedDate = txtDate.text.toString()
+            val selectedTime = txtTime.text.toString()
+            val duration = DateHelper.getDateReminderFromMillis(dateMillis, hour, minute)
+
+            if (selectedDate != oldTodo.date && selectedTime != oldTodo.time) {
+                viewModel.cancelReminder(oldTodo.time)
+                viewModel.scheduleReminder(newTodo.title, duration)
+            }
+        }
+    }
 }

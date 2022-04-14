@@ -11,12 +11,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import id.muhariananda.notemarks.R
-import id.muhariananda.notemarks.common.AlertUtils.Companion.makeAlertToDelete
-import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
+import id.muhariananda.notemarks.common.makeToast
 import id.muhariananda.notemarks.data.entities.Priority
 import id.muhariananda.notemarks.databinding.FragmentNoteUpdateBinding
+import id.muhariananda.notemarks.ui.common.AlertHelper
 import id.muhariananda.notemarks.ui.viewmodels.NoteViewModel
 import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NoteUpdateFragment : Fragment() {
@@ -27,6 +28,9 @@ class NoteUpdateFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private val args by navArgs<NoteUpdateFragmentArgs>()
+
+    @Inject
+    lateinit var alertHelper: AlertHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -110,8 +114,7 @@ class NoteUpdateFragment : Fragment() {
 
     private fun deleteNote() {
         val title = args.currentNote.title
-        makeAlertToDelete(
-            requireContext(),
+        alertHelper.makeAlertToDelete(
             getString(R.string.text_delete_item, title),
         ) {
             noteViewModel.deleteNote(args.currentNote)

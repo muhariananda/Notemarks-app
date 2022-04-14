@@ -11,5 +11,13 @@ data class Todo(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val title: String,
-    val isDone: Boolean = false
-) : Parcelable
+    val isDone: Boolean = false,
+    val date: String,
+    val hour: Int,
+    val minute: Int,
+    val priority: Priority
+) : Parcelable {
+    val time: String get() {
+        return "$hour:$minute"
+    }
+}

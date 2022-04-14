@@ -1,4 +1,4 @@
-package id.muhariananda.notemarks.common
+package id.muhariananda.notemarks.ui.common
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView

@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import id.muhariananda.notemarks.R
-import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
-import id.muhariananda.notemarks.common.DateUtils
+import id.muhariananda.notemarks.common.DateHelper
+import id.muhariananda.notemarks.common.makeToast
 import id.muhariananda.notemarks.data.entities.Note
 import id.muhariananda.notemarks.databinding.FragmentNoteAddBinding
 import id.muhariananda.notemarks.ui.viewmodels.NoteViewModel
@@ -79,7 +79,7 @@ class NoteAddFragment : Fragment() {
                     0,
                     mTitle,
                     mContent,
-                    DateUtils.getCurrentDate(),
+                    DateHelper.getCurrentDate(),
                     sharedViewModel.priority.value!!
                 )
                 noteViewModel.insertData(note)

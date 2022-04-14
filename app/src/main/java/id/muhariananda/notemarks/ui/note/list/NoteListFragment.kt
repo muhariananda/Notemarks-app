@@ -10,18 +10,14 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import id.muhariananda.notemarks.R
-import id.muhariananda.notemarks.common.AlertUtils.Companion.makeAlertToDelete
-import id.muhariananda.notemarks.common.AlertUtils.Companion.makeToast
-import id.muhariananda.notemarks.common.AlertUtils.Companion.makeUndoSnackBar
-import id.muhariananda.notemarks.common.hideKeyboard
-import id.muhariananda.notemarks.common.observeOnce
-import id.muhariananda.notemarks.common.searchItems
-import id.muhariananda.notemarks.common.swipeToDeleteItem
+import id.muhariananda.notemarks.common.*
 import id.muhariananda.notemarks.data.entities.Note
 import id.muhariananda.notemarks.databinding.FragmentNoteListBinding
+import id.muhariananda.notemarks.ui.common.AlertHelper
 import id.muhariananda.notemarks.ui.viewmodels.NoteViewModel
 import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NoteListFragment : Fragment() {
@@ -32,6 +28,9 @@ class NoteListFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private val adapter: NoteListAdapter by lazy { NoteListAdapter() }
+
+    @Inject
+    lateinit var alertHelper: AlertHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +64,7 @@ class NoteListFragment : Fragment() {
         binding.toolbarNoteList.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_delete_all_note -> {
-                    makeAlertToDelete(requireContext(), getString(R.string.text_delete_all)) {
+                    alertHelper.makeAlertToDelete(getString(R.string.text_delete_all)) {
                         viewModel.deleteAllNotes()
                         makeToast(requireContext(), getString(R.string.text_delete_all))
                     }
@@ -113,10 +112,7 @@ class NoteListFragment : Fragment() {
     }
 
     private fun restoreDeleteNote(view: View, deletedNote: Note) {
-        view.makeUndoSnackBar(
-            requireContext(),
-            deletedNote.title
-        ) {
+        alertHelper.makeUndoSnackBar(view, deletedNote.title) {
             viewModel.insertData(deletedNote)
         }
     }

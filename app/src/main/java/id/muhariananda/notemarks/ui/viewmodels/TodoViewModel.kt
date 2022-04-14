@@ -6,16 +6,26 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.data.todo.ToDoRepository
+import id.muhariananda.notemarks.ui.worker.TaskReminder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TodoViewModel @Inject constructor(
-    private val repository: ToDoRepository
+    private val repository: ToDoRepository,
+    private val taskReminder: TaskReminder
 ) : ViewModel() {
 
     val todos = repository.todosFlow.asLiveData()
+
+    fun scheduleReminder(task: String, duration: Long) {
+        taskReminder.setTaskReminder(task, duration)
+    }
+
+    fun cancelReminder(task: String) {
+        taskReminder.cancelTaskReminder(task)
+    }
 
     fun insertTodo(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {

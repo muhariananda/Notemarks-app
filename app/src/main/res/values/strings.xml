@@ -5,26 +5,32 @@
     <string name="menu_notes_title">Notes</string>
     <string name="menu_to_do_title">Todo</string>
     <string name="text_add_note">Add notes</string>
+
     <string name="text_menu_save">Save</string>
     <string name="text_menu_custom">Custom</string>
     <string name="text_menu_delete">Delete</string>
+    <string name="text_menu_delete_notes">Delete All</string>
+    <string name="text_menu_sort_by">Sort By</string>
+    <string name="text_menu_sort_by_high">Sort by High</string>
+    <string name="text_menu_sort_by_low">Sort by Low</string>
+
     <string name="text_select_priority">Select Priority</string>
     <string name="text_low_priority">Low priority</string>
     <string name="text_medium_priority">Medium priority</string>
     <string name="text_high_priority">High priority</string>
+
     <string name="text_no_notes">No notes</string>
     <string name="text_hint_note_title">Title..</string>
-    <string name="text_menu_delete_notes">Delete All</string>
     <string name="notes">Notes</string>
-    <string name="text_menu_sort_by">Sort By</string>
-    <string name="text_menu_sort_by_high">Sort by High</string>
-    <string name="text_menu_sort_by_low">Sort by Low</string>
     <string name="text_add_to_do">Add To Do</string>
     <string name="text_hint_todo">Enter task..</string>
     <string name="text_update">Update</string>
     <string name="text_todo_done">Done</string>
     <string name="text_to_do">To Do</string>
     <string name="text_delete_all_todos">Delete All Todos</string>
+
+    <string name="text_picker_date">Select Date Reminder</string>
+    <string name="text_picker_time">Select TimeReminder</string>
 
     <string name="text_delete_all">Delete all</string>
     <string name="text_deleted_notes">All notes have been deleted</string>
@@ -36,11 +42,15 @@
     <string name="text_success_updated">Successfully updated</string>
     <string name="text_message_retry">Field cannot be empty</string>
     <string name="text_message_delete">Are you sure want to delete?</string>
+
     <string name="text_yes">Yes</string>
     <string name="text_no">No</string>
     <string name="text_undo">Undo</string>
+
     <string name="text_hint_time_reminder">Time reminder</string>
     <string name="text_hint_date_reminder">Date reminder</string>
     <string name="text_btn_save_reminder">Save Reminder</string>
     <string name="text_hint_task">Task</string>
+
+    <string name="text_show_time">%s:%s</string>
 </resources>
