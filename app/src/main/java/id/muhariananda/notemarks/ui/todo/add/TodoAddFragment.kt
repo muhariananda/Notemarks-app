@@ -62,18 +62,18 @@ class TodoAddFragment : BottomSheetDialogFragment() {
 
     private fun dateTimePicker() {
         binding.apply {
-            txtDate.setOnClickListener {
+            txtAddDateTodo.setOnClickListener {
                 datePickerHelper.makeDatePicker { millis ->
                     dateMillis = millis
-                    txtDate.setText(convertMillisToDate(millis))
+                    txtAddDateTodo.setText(convertMillisToDate(millis))
                 }
             }
 
-            txtTime.setOnClickListener {
+            txtAddTimeTodo.setOnClickListener {
                 datePickerHelper.makeTimePicker { h, m ->
                     hour = h
                     minute = m
-                    txtTime.setText(
+                    txtAddTimeTodo.setText(
                         getString(
                             R.string.text_show_time,
                             h.toString(),
@@ -88,9 +88,9 @@ class TodoAddFragment : BottomSheetDialogFragment() {
     private fun insertTodo() {
         binding.apply {
             btnAddTodo.setOnClickListener {
-                val title = txtTitle.text.toString()
+                val title = txtAddTitleTodo.text.toString()
 
-                if (title.isNotEmpty()) {
+                if (title.isNotBlank()) {
                     val todo = Todo(
                         0,
                         title,
@@ -114,8 +114,8 @@ class TodoAddFragment : BottomSheetDialogFragment() {
 
     private fun setTaskReminder(todo: Todo) {
         binding.apply {
-            val selectedDate = txtDate.text.toString()
-            val selectedTime = txtTime.text.toString()
+            val selectedDate = txtAddDateTodo.text.toString()
+            val selectedTime = txtAddTimeTodo.text.toString()
             val duration = getDateReminderFromMillis(dateMillis, hour, minute)
 
             if (selectedDate.isNotEmpty() && selectedTime.isNotEmpty()) {

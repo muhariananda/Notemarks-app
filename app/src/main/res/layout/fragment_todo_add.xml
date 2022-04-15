@@ -68,7 +68,7 @@
             app:layout_constraintTop_toBottomOf="@+id/chipGroup_todo_add">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_title"
+                android:id="@+id/txt_add_title_todo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/text_hint_task"
@@ -90,7 +90,7 @@
             app:startIconDrawable="@drawable/ic_date">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_date"
+                android:id="@+id/txt_add_date_todo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="true"
@@ -114,7 +114,7 @@
             app:startIconDrawable="@drawable/ic_time">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_time"
+                android:id="@+id/txt_add_time_todo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="true"
