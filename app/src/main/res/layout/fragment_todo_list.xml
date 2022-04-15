@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
+        android:background="?attr/colorOnPrimary"
         tools:context=".ui.todo.list.TodoListFragment">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -30,15 +30,15 @@
                 android:id="@+id/toolbar_todo"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/background"
+                android:background="?attr/colorOnPrimary"
                 app:menu="@menu/menu_top_todo_list">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/text_to_do"
-                    android:textColor="@color/primary"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/task"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="21sp" />
 
             </com.google.android.material.appbar.MaterialToolbar>
@@ -63,6 +63,7 @@
             android:id="@+id/rv_todo"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:clipToPadding="false"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
@@ -75,6 +76,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_add_todo"
+            app:backgroundTint="?attr/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
@@ -99,7 +101,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/hint" />
+            app:tint="@color/hint_alpha_50" />
 
         <TextView
             android:id="@+id/textView2"
@@ -107,8 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:checkTodosEmpty="@{viewModel.emptyTodo}"
-            android:text="Nothing To Do"
-            android:textColor="@color/hint"
+            android:text="@string/tasks_empty"
+            android:textColor="@color/hint_alpha_50"
             app:layout_constraintEnd_toEndOf="@+id/imageView2"
             app:layout_constraintStart_toStartOf="@+id/imageView2"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />

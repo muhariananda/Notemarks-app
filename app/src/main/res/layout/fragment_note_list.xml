@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
+        android:background="?attr/colorOnPrimary"
         tools:context=".ui.note.list.NoteListFragment">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -30,16 +30,16 @@
                 android:id="@+id/toolbar_note_list"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/background"
+                android:background="?attr/colorOnPrimary"
                 android:elevation="@null"
                 app:menu="@menu/menu_top_note_list">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="@string/notes"
-                    android:textColor="@color/primary"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="21sp" />
 
             </com.google.android.material.appbar.MaterialToolbar>
@@ -67,6 +67,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:clipToPadding="false"
             android:scrollbars="vertical"
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -87,7 +88,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/hint" />
+            app:tint="@color/hint_alpha_50" />
 
         <TextView
             android:id="@+id/textView"
@@ -96,7 +97,7 @@
             android:layout_marginTop="8dp"
             android:emptyNotes="@{viewModel.emptyNotes}"
             android:text="@string/text_no_notes"
-            android:textColor="@color/hint"
+            android:textColor="@color/hint_alpha_50"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="@+id/imageView"
@@ -113,7 +114,7 @@
             android:focusable="true"
             android:navigateToNoteAddFragment="@{true}"
             android:src="@drawable/ic_add"
-            app:backgroundTint="@color/primary"
+            app:backgroundTint="?attr/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:tint="@color/white" />

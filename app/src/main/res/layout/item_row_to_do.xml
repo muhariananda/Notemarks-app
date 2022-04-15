@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:sendDataToTodoUpdateFragment="@{todo}"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="?attr/colorOnSecondary"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp">
 
@@ -44,7 +44,7 @@
                 android:changeTextColorIfChecked="@{todo}"
                 android:maxLines="2"
                 android:text="@{todo.title}"
-                android:textColor="@color/text"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/checkBox"
                 app:layout_constraintEnd_toStartOf="@+id/img_priority"

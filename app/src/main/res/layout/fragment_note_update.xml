@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="note"
             type="id.muhariananda.notemarks.data.entities.Note" />
@@ -16,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
+        android:background="?attr/colorOnPrimary"
         tools:context=".ui.note.update.NoteUpdateFragment">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -33,10 +34,10 @@
                 android:id="@+id/toolbar_note_update"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/background"
+                android:background="?attr/colorOnPrimary"
                 app:menu="@menu/menu_top_note_update"
                 app:navigationIcon="@drawable/ic_arrow"
-                app:navigationIconTint="@color/primary" />
+                app:navigationIconTint="?attr/colorPrimary" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -93,13 +94,14 @@
             android:minHeight="48dp"
             android:paddingHorizontal="8dp"
             android:text="@{note.title}"
-            android:textColor="@color/text"
+            android:textColor="?android:textColorPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chipGroup_note_update" />
+            app:layout_constraintTop_toBottomOf="@+id/chipGroup_note_update"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/edt_note_update_content"
@@ -109,6 +111,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:alpha="0.5"
             android:background="@null"
             android:ems="10"
             android:gravity="start|top"
@@ -116,13 +119,14 @@
             android:lineSpacingMultiplier="1.5"
             android:paddingHorizontal="8dp"
             android:text="@{note.content}"
-            android:textColor="@color/text"
+            android:textColor="?android:textColorPrimary"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_note_update_title"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:autofillHints="" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

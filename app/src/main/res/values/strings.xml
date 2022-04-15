@@ -53,4 +53,6 @@
     <string name="text_hint_task">Task</string>
 
     <string name="text_show_time">%s:%s</string>
+    <string name="tasks_empty">Tasks empty</string>
+    <string name="task">Task</string>
 </resources>

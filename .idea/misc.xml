@@ -11,7 +11,7 @@
         <entry key="app/src/main/res/drawable/chip_selector.xml" value="0.215625" />
         <entry key="app/src/main/res/drawable/chip_text_selector.xml" value="0.215625" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.1545" />
-        <entry key="app/src/main/res/drawable/ic_custom.xml" value="0.215625" />
+        <entry key="app/src/main/res/drawable/ic_custom.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.215625" />
         <entry key="app/src/main/res/drawable/ic_done.xml" value="0.215625" />
         <entry key="app/src/main/res/drawable/ic_mark.xml" value="0.1545" />
@@ -20,11 +20,11 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_note_add.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_note_bottom_dialog.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/fragment_note_list.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_note_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_note_update.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_to_do_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_todo_add.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_todo_list.xml" value="0.39895833333333336" />
+        <entry key="app/src/main/res/layout/fragment_todo_list.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_todo_update.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_row_note.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_row_to_do.xml" value="0.4291497975708502" />
@@ -34,6 +34,7 @@
         <entry key="app/src/main/res/menu/menu_top_note_list.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/menu/menu_top_note_update.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/menu/menu_top_todo_list.xml" value="0.19947916666666668" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>
     </option>
   </component>
