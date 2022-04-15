@@ -8,6 +8,7 @@ import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.data.todo.ToDoRepository
 import id.muhariananda.notemarks.ui.worker.TaskReminder
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,7 +18,11 @@ class TodoViewModel @Inject constructor(
     private val taskReminder: TaskReminder
 ) : ViewModel() {
 
-    val todos = repository.todosFlow.asLiveData()
+    val todos = repository.todosFlow
+        .map { sortedList(it) }
+        .asLiveData()
+
+    private fun sortedList(list: List<Todo>) = list.sortedBy { it.isDone }
 
     fun scheduleReminder(task: String, duration: Long) {
         taskReminder.setTaskReminder(task, duration)

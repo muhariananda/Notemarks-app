@@ -13,5 +13,5 @@ data class Note(
     var title: String,
     var content: String,
     var date: String,
-    var priority: Priority
+    var priority: Priority = Priority.LOW
 ) : Parcelable
