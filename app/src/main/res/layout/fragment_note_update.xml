@@ -48,11 +48,13 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            app:takeSelectedPriority="@{viewModel}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:singleSelection="true">
+            app:singleSelection="true"
+            app:selectionRequired="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_low_update"
@@ -60,7 +62,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:onClick="@{() -> viewModel.setPriority(1)}"
                 android:text="@string/text_low_priority" />
 
             <com.google.android.material.chip.Chip
@@ -68,7 +69,6 @@
                 style="@style/ThemeOverlay.Notemarks.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.setPriority(2)}"
                 android:text="@string/text_medium_priority" />
 
             <com.google.android.material.chip.Chip
@@ -76,7 +76,6 @@
                 style="@style/ThemeOverlay.Notemarks.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.setPriority(3)}"
                 android:text="@string/text_high_priority" />
         </com.google.android.material.chip.ChipGroup>
 

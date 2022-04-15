@@ -28,7 +28,7 @@ class TodoUpdateFragment : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
 
     private val viewModel: TodoViewModel by viewModels()
-    private val mSharedViewModel: SharedViewModel by activityViewModels()
+    private val mSharedViewModel: SharedViewModel by viewModels()
 
     private val args by navArgs<TodoUpdateFragmentArgs>()
 
@@ -58,6 +58,7 @@ class TodoUpdateFragment : BottomSheetDialogFragment() {
         }
 
         setupChip()
+        dateTimePicker()
         updateTodo()
     }
 

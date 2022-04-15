@@ -30,11 +30,11 @@ class SharedViewModel : ViewModel() {
         return !(title.isEmpty() || content.isEmpty())
     }
 
-    fun setPriority(priority: Int) {
+    fun parseStringToPriority(priority: String) {
         when (priority) {
-            1 -> _priority.value = Priority.LOW
-            2 -> _priority.value = Priority.MEDIUM
-            3 -> _priority.value = Priority.HIGH
+            "Low priority" -> _priority.value = Priority.LOW
+            "Medium priority" -> _priority.value = Priority.MEDIUM
+            "High priority" -> _priority.value = Priority.HIGH
         }
     }
 

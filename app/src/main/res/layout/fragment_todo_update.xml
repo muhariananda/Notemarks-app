@@ -30,7 +30,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:singleSelection="true">
+            app:singleSelection="true"
+            app:takeSelectedPriority="@{sharedViewModel}">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_low_update"
@@ -38,7 +39,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:onClick="@{() -> sharedViewModel.setPriority(1)}"
                 android:text="@string/text_low_priority" />
 
             <com.google.android.material.chip.Chip
@@ -46,7 +46,6 @@
                 style="@style/ThemeOverlay.Notemarks.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> sharedViewModel.setPriority(2)}"
                 android:text="@string/text_medium_priority" />
 
             <com.google.android.material.chip.Chip
@@ -54,7 +53,6 @@
                 style="@style/ThemeOverlay.Notemarks.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> sharedViewModel.setPriority(3)}"
                 android:text="@string/text_high_priority" />
         </com.google.android.material.chip.ChipGroup>
 
@@ -76,8 +74,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/text_hint_task"
-                android:text="@{todo.title}"
-                android:inputType="text" />
+                android:inputType="text"
+                android:text="@{todo.title}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

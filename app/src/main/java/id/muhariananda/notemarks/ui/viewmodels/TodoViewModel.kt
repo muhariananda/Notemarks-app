@@ -18,11 +18,7 @@ class TodoViewModel @Inject constructor(
     private val taskReminder: TaskReminder
 ) : ViewModel() {
 
-    val todos = repository.todosFlow
-        .map { sortedList(it) }
-        .asLiveData()
-
-    private fun sortedList(list: List<Todo>) = list.sortedBy { it.isDone }
+    val todos = repository.todosFlow.asLiveData()
 
     fun scheduleReminder(task: String, duration: Long) {
         taskReminder.setTaskReminder(task, duration)
