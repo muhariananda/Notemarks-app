@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.data.entities.Note
@@ -16,6 +18,7 @@ import id.muhariananda.notemarks.data.entities.Priority
 import id.muhariananda.notemarks.data.entities.Todo
 import id.muhariananda.notemarks.ui.note.list.NoteListFragmentDirections
 import id.muhariananda.notemarks.ui.todo.list.TodoListFragmentDirections
+import id.muhariananda.notemarks.ui.viewmodels.SharedViewModel
 
 class BindingAdapters {
     companion object {
@@ -77,6 +80,15 @@ class BindingAdapters {
                         )
                     )
                 }
+            }
+        }
+
+        @BindingAdapter("app:takeSelectedPriority")
+        @JvmStatic
+        fun ChipGroup.takeSelectedPriority(sharedViewModel: SharedViewModel) {
+            this.setOnCheckedChangeListener { group, checkedId ->
+                val titleOrNull = group.findViewById<Chip>(checkedId)?.text.toString()
+                sharedViewModel.parseStringToPriority(titleOrNull)
             }
         }
 

@@ -25,7 +25,7 @@ class NoteUpdateFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val noteViewModel: NoteViewModel by viewModels()
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by viewModels()
 
     private val args by navArgs<NoteUpdateFragmentArgs>()
 

@@ -27,7 +27,7 @@ class TodoAddFragment : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
 
     private val viewModel: TodoViewModel by viewModels()
-    private val mSharedViewModel: SharedViewModel by activityViewModels()
+    private val mSharedViewModel: SharedViewModel by viewModels()
 
     private var dateMillis = 0L
     private var hour = 0
