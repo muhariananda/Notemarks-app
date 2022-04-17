@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.muhariananda.notemarks.R
 import id.muhariananda.notemarks.common.*
@@ -90,6 +92,9 @@ class NoteListFragment : Fragment() {
     private fun showAllNotes() {
         binding.apply {
             rvListNote.adapter = adapter
+            rvListNote.layoutManager = StaggeredGridLayoutManager(
+                2, StaggeredGridLayoutManager.VERTICAL
+            )
             rvListNote.itemAnimator = SlideInUpAnimator().apply {
                 addDuration = 300
             }
