@@ -9,6 +9,3 @@ Notemarks is an application that functions to take notes, there is a priority la
 - Room 
 - WorkManager
 - Data Binding
-
-### Download App
-You can download and try it [here](asset/apk)
