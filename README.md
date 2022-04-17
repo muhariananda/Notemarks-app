@@ -1,4 +1,4 @@
-<img src="asset/Thumbnail.png">
+[thumbnail](asset/Thumbnail.png)
 Notemarks is an application that functions to take notes, there is a priority label to categorize which priority is more important. In addition, this application also has a feature to add tasks reminder.
 
 ## Tech Stack
@@ -9,3 +9,6 @@ Notemarks is an application that functions to take notes, there is a priority la
 - Room 
 - WorkManager
 - Data Binding
+
+### Download App
+You can download and try it [here](app/build/outputs/apk/debug)
